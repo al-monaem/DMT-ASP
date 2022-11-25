@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DMTModelStoreContainer" CdmEntityContainer="DMTEntities">
+    <EntitySetMapping Name="Refunds">
+      <EntityTypeMapping TypeName="DMTModel.Refund">
+        <MappingFragment StoreEntitySet="Refunds">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ticket_id" ColumnName="ticket_id" />
+          <ScalarProperty Name="transaction_id" ColumnName="transaction_id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Revenues">
+      <EntityTypeMapping TypeName="DMTModel.Revenue">
+        <MappingFragment StoreEntitySet="Revenues">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="tickets_sold_app" ColumnName="tickets_sold_app" />
+          <ScalarProperty Name="tickets_sold_manual" ColumnName="tickets_sold_manual" />
+          <ScalarProperty Name="revenue_app" ColumnName="revenue_app" />
+          <ScalarProperty Name="revenue_manual" ColumnName="revenue_manual" />
+          <ScalarProperty Name="date" ColumnName="date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Routes">
+      <EntityTypeMapping TypeName="DMTModel.Route">
+        <MappingFragment StoreEntitySet="Routes">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="station_1" ColumnName="station_1" />
+          <ScalarProperty Name="station_2" ColumnName="station_2" />
+          <ScalarProperty Name="price" ColumnName="price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stations">
+      <EntityTypeMapping TypeName="DMTModel.Station">
+        <MappingFragment StoreEntitySet="Stations">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tickets">
+      <EntityTypeMapping TypeName="DMTModel.Ticket">
+        <MappingFragment StoreEntitySet="Tickets">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="route_id" ColumnName="route_id" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tokens">
+      <EntityTypeMapping TypeName="DMTModel.Token">
+        <MappingFragment StoreEntitySet="Tokens">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="accessToken" ColumnName="accessToken" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="expired_at" ColumnName="expired_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transactions">
+      <EntityTypeMapping TypeName="DMTModel.Transaction">
+        <MappingFragment StoreEntitySet="Transactions">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="method" ColumnName="method" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="ticket_id" ColumnName="ticket_id" />
+          <ScalarProperty Name="transaction_id" ColumnName="transaction_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="DMTModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="nid" ColumnName="nid" />
+          <ScalarProperty Name="dob" ColumnName="dob" />
+          <ScalarProperty Name="wallet" ColumnName="wallet" />
+          <ScalarProperty Name="profilePic" ColumnName="profilePic" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="resettoken" ColumnName="resettoken" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

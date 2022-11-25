@@ -1,0 +1,14 @@
+G:\Projects\DMT-ASP\DMT\BLL\obj\Debug\BLL.csproj.AssemblyReference.cache
+G:\Projects\DMT-ASP\DMT\BLL\obj\Debug\BLL.csproj.CoreCompileInputs.cache
+G:\Projects\DMT-ASP\DMT\BLL\bin\Debug\BLL.dll
+G:\Projects\DMT-ASP\DMT\BLL\bin\Debug\BLL.pdb
+G:\Projects\DMT-ASP\DMT\BLL\bin\Debug\AutoMapper.dll
+G:\Projects\DMT-ASP\DMT\BLL\bin\Debug\DAL.dll
+G:\Projects\DMT-ASP\DMT\BLL\bin\Debug\EntityFramework.dll
+G:\Projects\DMT-ASP\DMT\BLL\bin\Debug\DAL.pdb
+G:\Projects\DMT-ASP\DMT\BLL\bin\Debug\DAL.dll.config
+G:\Projects\DMT-ASP\DMT\BLL\bin\Debug\AutoMapper.xml
+G:\Projects\DMT-ASP\DMT\BLL\bin\Debug\EntityFramework.xml
+G:\Projects\DMT-ASP\DMT\BLL\obj\Debug\BLL.csproj.CopyComplete
+G:\Projects\DMT-ASP\DMT\BLL\obj\Debug\BLL.dll
+G:\Projects\DMT-ASP\DMT\BLL\obj\Debug\BLL.pdb
