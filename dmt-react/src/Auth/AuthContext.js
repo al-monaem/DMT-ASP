@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AxiosInstance } from './AxiosInstance'
 
 const AuthContext = React.createContext()
@@ -10,8 +11,10 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
 
     const [currentUser, setCurrentUser] = useState(null)
+    const [accessToken, setAccessToken] = useState("")
+    const navigate = useNavigate()
+
     const axios = AxiosInstance
-    const controller = new AbortController();
 
     const register = async (data) => {
         try {
@@ -28,26 +31,34 @@ export const AuthProvider = ({ children }) => {
     const login = async (user) => {
         try {
             const response = await axios.post("api/login", JSON.stringify(user), {
-                signal: controller.signal,
                 headers: {
                     "Content-type": "application/json"
                 }
             })
             const data = response.data
-            //controller.abort()
+            //debugger
             if (data && data.accessToken !== null) {
-                return data
-            }
-            return { "message": "Incorrect email or password" }
+                setAccessToken(data.accessToken)
+                setCurrentUser(data.User)
+                //debugger
+                if (currentUser !== null && currentUser !== undefined) {
+                    //debugger
+                    navigate("/", { replace: true })
+                }
 
+                return { "message": "Error in server" }
+            }
+            return { "message": "Invalid email or password" }
         } catch (error) {
-            //controller.abort()
-            return { "message": "Login failed" }
+            setAccessToken("")
+            setCurrentUser("")
+            return { "message": "Error communicating with server" }
         }
     }
 
     const value = {
         currentUser,
+        accessToken,
         register,
         login
     }

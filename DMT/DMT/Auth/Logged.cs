@@ -7,7 +7,6 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-using System.Web.Script.Serialization;
 
 namespace DMT.Auth
 {

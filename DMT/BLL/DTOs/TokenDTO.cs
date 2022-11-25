@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.EF;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,6 @@ namespace BLL.DTOs
         public string userId { get; set; }
         public System.DateTime created_at { get; set; }
         public Nullable<System.DateTime> expired_at { get; set; }
+        public virtual UserDTO User { get; set; }
     }
 }

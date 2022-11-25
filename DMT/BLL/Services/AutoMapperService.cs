@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
+using DAL.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,10 @@ namespace BLL.Services
 
         public static CLASS2 MapSingle(CLASS1 data)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<CLASS1, CLASS2>());
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<CLASS1, CLASS2>();
+                cfg.CreateMap<User, UserDTO>();
+            });
             var mapper = new Mapper(config);
 
             return mapper.Map<CLASS2>(data);

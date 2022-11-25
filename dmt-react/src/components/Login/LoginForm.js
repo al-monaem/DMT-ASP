@@ -26,7 +26,7 @@ const LoginForm = ({ onSubmit, onChange, loading, error }) => {
                         <label className={style.label}>Password</label>
                         <input name='password' className={style.input} type="password" placeholder='Password' required onChange={e => onChange(e)} />
                     </div>
-                    {error !== "" &&
+                    {error.length > 0 &&
                         <div className='text-red-500 pl-1 w-full text-sm tracking-wide'>
                             {error}
                         </div>

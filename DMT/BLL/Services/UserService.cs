@@ -18,5 +18,11 @@ namespace BLL.Services
             var users = AutoMapperService<User, UserDTO>.MapList(data);
             return users;
         }
+        public static UserDTO Get(string id)
+        {
+            var data = DataAccessFactory.UserDataAccess().Get(id);
+            var user = AutoMapperService<User, UserDTO>.MapSingle(data);
+            return user;
+        }
     }
 }

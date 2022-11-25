@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import LoginForm from '../Login/LoginForm'
 import Logo from '../Login/Logo'
 import { useAuth } from '../../Auth/AuthContext'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const Login = () => {
     const style = {
@@ -13,14 +15,15 @@ const Login = () => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(false)
     const { login } = useAuth()
-    const [error, setError] = useState("")
+    const [error, setError] = useState('')
 
     const onSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
 
         const response = await login(user)
-        setError(response?.message)
+        const message = response.message
+        setError(message)
         setLoading(false)
     }
 

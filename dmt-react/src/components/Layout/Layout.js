@@ -1,11 +1,15 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
+import { useAuth } from '../../Auth/AuthContext'
 import Sidebar from "./Sidebar/Sidebar"
 import Topbar from "./Topbar/Topbar"
 
 const Layout = () => {
+
+    const { currentUser } = useAuth()
+
     return (
-        <div className="flex w-screen divide-x max-h-screen h-screen ">
+        currentUser ? (<div className="flex w-screen divide-x max-h-screen h-screen ">
 
             <div className="w-[15%]">
                 <Sidebar />
@@ -20,7 +24,7 @@ const Layout = () => {
                 </div>
             </div>
 
-        </div>
+        </div>) : <Navigate to="/login" />
     )
 }
 

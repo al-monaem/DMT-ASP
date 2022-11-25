@@ -6,6 +6,7 @@ import Layout from "./components/Layout/Layout";
 import MyTickets from "./components/pages/MyTickets";
 import Register from "./components/pages/Register"
 import Login from "./components/pages/Login";
+import PrivateRoute from "./components/common/PrivateRoute"
 
 
 

@@ -16,12 +16,12 @@ namespace DMT.Controllers
     public class UserController : ApiController
     {
         [HttpGet]
-        [Route("api/users")]
+        [Route("api/user")]
         [Logged]
-        public HttpResponseMessage Get()
+        public HttpResponseMessage Get(string id)
         {
-            var users = UserService.Get();
-            return Request.CreateResponse(HttpStatusCode.OK, users);
+            var user = UserService.Get(id);
+            return Request.CreateResponse(HttpStatusCode.OK, user);
         }
 
         [Logged]
