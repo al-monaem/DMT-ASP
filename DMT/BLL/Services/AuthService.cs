@@ -46,5 +46,10 @@ namespace BLL.Services
             }
             return false;
         }
+
+        public static bool ExpireToken(string token)
+        {
+            return DataAccessFactory.TokenDataAccess().Expire(token);
+        }
     }
 }

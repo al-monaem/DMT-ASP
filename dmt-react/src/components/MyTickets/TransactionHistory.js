@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import FilterBox from '../components/common/FilterBox'
-import Transaction from '../components/common/Transaction'
+import FilterBox from '../common/FilterBox'
+import Transaction from '../common/Transaction'
 
 const TransactionHistory = () => {
     const [tExpanded, setExpanded] = useState(0);

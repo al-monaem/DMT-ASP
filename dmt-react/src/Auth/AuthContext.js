@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AxiosInstance } from './AxiosInstance'
+import { AxiosInstance, setToken } from './AxiosInstance'
 
 const AuthContext = React.createContext()
 
@@ -16,6 +16,11 @@ export const AuthProvider = ({ children }) => {
 
     const axios = AxiosInstance
 
+    const setCredentials = () => {
+        setCurrentUser(localStorage.getItem('user'))
+        setAccessToken(localStorage.getItem('accessToken'))
+    }
+
     const register = async (data) => {
         try {
             const response = await axios.post("api/register", JSON.stringify(data), {
@@ -29,20 +34,22 @@ export const AuthProvider = ({ children }) => {
     }
 
     const login = async (user) => {
+        debugger
         try {
             const response = await axios.post("api/login", JSON.stringify(user), {
                 headers: {
                     "Content-type": "application/json"
                 }
             })
-            const data = response.data
+            const data = await response.data
             //debugger
             if (data && data.accessToken !== null) {
                 setAccessToken(data.accessToken)
                 setCurrentUser(data.User)
-                //debugger
-                if (currentUser !== null && currentUser !== undefined) {
-                    //debugger
+
+                if (data.User) {
+                    localStorage.setItem('user', JSON.stringify(data.User))
+                    localStorage.setItem('accessToken', data.accessToken)
                     navigate("/", { replace: true })
                 }
 
@@ -56,11 +63,25 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const logout = async () => {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('user')
+        try {
+            setToken(accessToken)
+            const response = await axios.post("api/logout")
+        } catch (error) {
+
+        }
+        navigate("/login")
+    }
+
     const value = {
         currentUser,
         accessToken,
         register,
-        login
+        login,
+        setCredentials,
+        logout
     }
 
     return (

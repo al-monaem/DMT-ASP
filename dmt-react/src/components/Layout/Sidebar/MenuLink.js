@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
-const MenuLink = ({ text, path, icon, animateFrom, animateTo, transitionDuration }) => {
+const MenuLink = ({ text, path, icon, animateFrom, animateTo, transitionDuration, onClick }) => {
 
     const [selected, setSelected] = useState(false);
     const ref = useRef(icon);
@@ -19,6 +19,7 @@ const MenuLink = ({ text, path, icon, animateFrom, animateTo, transitionDuration
         <NavLink
             className={style.container}
             to={path}
+            onClick={e => onClick(e)}
             style={({ isActive }) => {
                 isActive ? setSelected(true) : setSelected(false)
             }}>

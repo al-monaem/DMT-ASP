@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import TransactionHistory from '../../MyTickets/TransactionHistory';
-import { ActiveTickets } from '../../MyTickets/ActiveTickets';
+import TransactionHistory from '../MyTickets/TransactionHistory';
+import { ActiveTickets } from '../MyTickets/ActiveTickets';
 
 const MyTickets = () => {
 

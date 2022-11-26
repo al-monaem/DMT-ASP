@@ -3,8 +3,10 @@ using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace DAL.Repo
 {
@@ -18,20 +20,22 @@ namespace DAL.Repo
         public Token Add(Token obj)
         {
             db.Tokens.Add(obj);
+
             if (db.SaveChanges() > 0)
             {
-                return obj;
+                var tk = GetByUser(obj.userId);
+                return tk;
             }
             return null;
         }
 
         public Token Get(string token)
         {
-            return db.Tokens.FirstOrDefault(t => t.accessToken.Equals(token));
+            return db.Tokens.Include(t=>t.User).FirstOrDefault(t => t.accessToken.Equals(token));
         }
         public Token GetByUser(string id)
         {
-            return db.Tokens.FirstOrDefault(t => t.userId.Equals(id) && t.expired_at==null);
+            return db.Tokens.Include(t => t.User).FirstOrDefault(t => t.userId.Equals(id) && t.expired_at==null);
         }
 
         public Token Update(Token obj)
@@ -40,6 +44,19 @@ namespace DAL.Repo
             db.Entry(dbtk).CurrentValues.SetValues(obj);
             if (db.SaveChanges() > 0) return obj;
             return null;
+        }
+        public bool Expire(string accessToken)
+        {
+            var token = Get(accessToken);
+            if(token != null)
+            {
+                token.expired_at = DateTime.Now;
+                db.Entry(token).CurrentValues.SetValues(token);
+                db.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
     }
 }

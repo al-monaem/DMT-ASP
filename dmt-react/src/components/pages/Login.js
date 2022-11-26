@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import LoginForm from '../Login/LoginForm'
 import Logo from '../Login/Logo'
 import { useAuth } from '../../Auth/AuthContext'
-import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import { Navigate } from 'react-router-dom'
 
 const Login = () => {
     const style = {
@@ -16,6 +16,11 @@ const Login = () => {
     const [loading, setLoading] = useState(false)
     const { login } = useAuth()
     const [error, setError] = useState('')
+    const { setCredentials, currentUser } = useAuth()
+
+    useEffect(() => {
+        setCredentials()
+    }, [])
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -39,7 +44,7 @@ const Login = () => {
     }
 
     return (
-        <div className={style.container}>
+        currentUser ? <Navigate to="/" /> : <div className={style.container}>
             <div className={style.image}>
                 <Logo />
             </div>

@@ -1,5 +1,6 @@
 ﻿using BLL.DTOs;
 using BLL.Services;
+using DMT.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Web.Http.Cors;
 namespace DMT.Controllers
 {
     [EnableCors("*", "*", "*")]
-    public class LoginController : ApiController
+    public class AuthController : ApiController
     {
         [HttpPost]
         [Route("api/login")]
@@ -19,6 +20,18 @@ namespace DMT.Controllers
         {
             var token = AuthService.Authenticate(user);
             return Request.CreateResponse(HttpStatusCode.OK, token);
+        }
+
+        [Logged]
+        [HttpPost]
+        [Route("api/logout")]
+        public HttpResponseMessage Logout()
+        {
+            var rs = AuthService.ExpireToken(Request.Headers.Authorization.ToString());
+            if(rs)
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+            return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
     }
 }

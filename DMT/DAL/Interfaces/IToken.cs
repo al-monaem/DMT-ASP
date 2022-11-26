@@ -13,5 +13,6 @@ namespace DAL.Interfaces
         Token GetByUser(string id);
         Token Update(Token obj);
         Token Add(Token obj);
+        bool Expire(string accessToken);
     }
 }
