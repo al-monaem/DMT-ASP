@@ -55,77 +55,57 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="DataAccessFactory.cs" />
-    <Compile Include="EF\DMT.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DMT.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\DMT.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DMT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\DMT.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DMT.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="EF\Refund.cs">
-      <DependentUpon>DMT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\Revenue.cs">
-      <DependentUpon>DMT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\Route.cs">
-      <DependentUpon>DMT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\Station.cs">
-      <DependentUpon>DMT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\Ticket.cs">
-      <DependentUpon>DMT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\Token.cs">
-      <DependentUpon>DMT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\Transaction.cs">
-      <DependentUpon>DMT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\User.cs">
-      <DependentUpon>DMT.tt</DependentUpon>
-    </Compile>
+    <Compile Include="EF\DMTEntities.cs" />
+    <Compile Include="EF\Helper\HashPassword.cs" />
+    <Compile Include="EF\Model\Refund.cs" />
+    <Compile Include="EF\Model\Revenue.cs" />
+    <Compile Include="EF\Model\Route.cs" />
+    <Compile Include="EF\Model\Station.cs" />
+    <Compile Include="EF\Model\Ticket.cs" />
+    <Compile Include="EF\Model\Token.cs" />
+    <Compile Include="EF\Model\Transaction.cs" />
+    <Compile Include="EF\Model\User.cs" />
     <Compile Include="Interfaces\IAuth.cs" />
     <Compile Include="Interfaces\IRepo.cs" />
+    <Compile Include="Interfaces\IRoute.cs" />
+    <Compile Include="Interfaces\ITicket.cs" />
     <Compile Include="Interfaces\IToken.cs" />
+    <Compile Include="Interfaces\ITransaction.cs" />
+    <Compile Include="Migrations\202211300320250_CREATE_DB_TABLE_SEED_USER.cs" />
+    <Compile Include="Migrations\202211300320250_CREATE_DB_TABLE_SEED_USER.designer.cs">
+      <DependentUpon>202211300320250_CREATE_DB_TABLE_SEED_USER.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211300330431_UPDATE_USERS.cs" />
+    <Compile Include="Migrations\202211300330431_UPDATE_USERS.designer.cs">
+      <DependentUpon>202211300330431_UPDATE_USERS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211300441033_UPDATE_STATIONS.cs" />
+    <Compile Include="Migrations\202211300441033_UPDATE_STATIONS.designer.cs">
+      <DependentUpon>202211300441033_UPDATE_STATIONS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repo\TokenRepo.cs" />
+    <Compile Include="Repo\TransactionRepo.cs" />
     <Compile Include="Repo\UserRepo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="EF\DMT.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DMT.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="EF\DMT.edmx.diagram">
-      <DependentUpon>DMT.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EF\DMT.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DMT.edmx</DependentUpon>
-      <LastGenOutput>DMT.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="EF\DMT.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DMT.edmx</DependentUpon>
-      <LastGenOutput>DMT.cs</LastGenOutput>
-    </Content>
+    <EmbeddedResource Include="Migrations\202211300320250_CREATE_DB_TABLE_SEED_USER.resx">
+      <DependentUpon>202211300320250_CREATE_DB_TABLE_SEED_USER.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211300330431_UPDATE_USERS.resx">
+      <DependentUpon>202211300330431_UPDATE_USERS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211300441033_UPDATE_STATIONS.resx">
+      <DependentUpon>202211300441033_UPDATE_STATIONS.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

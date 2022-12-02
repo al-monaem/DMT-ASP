@@ -1,4 +1,6 @@
 ﻿using DAL.EF;
+using DAL.EF.Helper;
+using DAL.EF.Model;
 using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -23,7 +25,8 @@ namespace DAL.Repo
 
         public User Authenticate(string email, string password)
         {
-            return db.Users.FirstOrDefault(x => x.email == email && x.password == password);
+            string pass = HashPassword.Hash(password);
+            return db.Users.FirstOrDefault(x => x.email == email && x.password == pass);
         }
 
         public bool Delete(string id)

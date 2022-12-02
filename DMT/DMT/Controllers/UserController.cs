@@ -23,14 +23,5 @@ namespace DMT.Controllers
             var user = UserService.Get(id);
             return Request.CreateResponse(HttpStatusCode.OK, user);
         }
-
-        [Logged]
-        [HttpPost]
-        [Route("api/post")]
-        public HttpResponseMessage Post()
-        {
-            //var token = Request.Headers;
-            return Request.CreateResponse(HttpStatusCode.OK, Request.Headers.Authorization);
-        }
     }
 }

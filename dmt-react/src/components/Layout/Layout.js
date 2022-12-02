@@ -4,6 +4,7 @@ import { useAuth } from '../../Auth/AuthContext'
 import Sidebar from "./Sidebar/Sidebar"
 import Topbar from "./Topbar/Topbar"
 import LoaderAnim from "../common/LoaderAnim"
+import Loader from '../common/Loader'
 
 const Layout = () => {
 
@@ -21,7 +22,7 @@ const Layout = () => {
 
     return (
         loading ?
-            <LoaderAnim /> :
+            <Loader /> :
             (currentUser ?
                 <div className={style.container}>
 

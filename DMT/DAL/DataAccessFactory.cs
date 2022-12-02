@@ -1,4 +1,4 @@
-﻿using DAL.EF;
+﻿using DAL.EF.Model;
 using DAL.Interfaces;
 using DAL.Repo;
 using System;
@@ -23,6 +23,10 @@ namespace DAL
         public static IToken TokenDataAccess()
         {
             return new TokenRepo();
+        }
+        public static ITransaction TransactionDataAccess()
+        {
+            return new TransactionRepo();
         }
     }
 }

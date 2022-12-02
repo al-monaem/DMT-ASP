@@ -1,4 +1,4 @@
-﻿using DAL.EF;
+﻿using DAL.EF.Model;
 using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using DAL.EF;
 
 namespace DAL.Repo
 {

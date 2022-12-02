@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import MenuLink from './MenuLink'
 import { RiDashboardFill } from 'react-icons/ri'
 import { IoTicketSharp, IoSettingsSharp } from 'react-icons/io5'
-import { FaStore } from 'react-icons/fa'
+import { FaStore, FaUsers } from 'react-icons/fa'
 import { BiLogOut } from 'react-icons/bi'
+import { AiOutlineTransaction } from 'react-icons/ai'
 import { useAuth } from '../../../Auth/AuthContext'
 
 const SidebarLinks = () => {
@@ -57,6 +58,24 @@ const SidebarLinks = () => {
                 animateFrom={animateFrom}
                 animateTo={animateTo}
                 transitionDuration={0.4} />
+            <div className='space-y-2'>
+                <MenuLink
+                    onClick={onClick}
+                    text="Users"
+                    path="/admin/users"
+                    icon={<FaUsers className='w-4 h-4' />}
+                    animateFrom={animateFrom}
+                    animateTo={animateTo}
+                    transitionDuration={0.4} />
+                <MenuLink
+                    onClick={onClick}
+                    text="Transactions"
+                    path="/admin/transactions"
+                    icon={<AiOutlineTransaction className='w-4 h-4' />}
+                    animateFrom={animateFrom}
+                    animateTo={animateTo}
+                    transitionDuration={0.4} />
+            </div>
             <MenuLink
                 text="Logout"
                 path="/logout"

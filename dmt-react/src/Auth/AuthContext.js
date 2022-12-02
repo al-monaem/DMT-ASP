@@ -10,11 +10,32 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
 
+    const axios = AxiosInstance
+
     const [currentUser, setCurrentUser] = useState(null)
     const [accessToken, setAccessToken] = useState("")
+    const [stations, setStations] = useState([])
     const navigate = useNavigate()
 
-    const axios = AxiosInstance
+    const setStationData = async e => {
+        try {
+            const response = await axios.get("api/stations", {
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            const data = await response.data
+            //debugger
+            if (data) {
+                setStations(data)
+                return true
+            }
+            return
+        } catch (error) {
+            console.log("station data error")
+            return false
+        }
+    }
 
     const setCredentials = () => {
         setCurrentUser(localStorage.getItem('user'))
@@ -81,7 +102,9 @@ export const AuthProvider = ({ children }) => {
         register,
         login,
         setCredentials,
-        logout
+        logout,
+        setStationData,
+        stations,
     }
 
     return (
