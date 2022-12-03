@@ -16,16 +16,30 @@ namespace DAL.Repo
         {
             db = new DMTEntities();
         }
+
         public Transaction Add()
         {
             throw new NotImplementedException();
         }
 
-        public Transaction Get()
+        public Route Get()
         {
             throw new NotImplementedException();
         }
 
+        public List<Ticket> Get(string id)
+        {
+            List<Transaction> transaction = db.Transactions.Where(x => x.Ticket.status.ToLower().Equals("active")).ToList();
+            List<Ticket> ticket = new List<Ticket>();
+
+            foreach(var t in transaction)
+            {
+                ticket.Add(t.Ticket);
+            }
+            
+            return ticket;
+        }
+            
         public List<Station> GetStations()
         {
             return db.Stations.ToList();
@@ -36,12 +50,12 @@ namespace DAL.Repo
             throw new NotImplementedException();
         }
 
-        Ticket ITicket.Get()
+        List<Ticket> ITicket.Get()
         {
             throw new NotImplementedException();
         }
 
-        Route IRoute.Get()
+        Transaction ITransaction.Get()
         {
             throw new NotImplementedException();
         }

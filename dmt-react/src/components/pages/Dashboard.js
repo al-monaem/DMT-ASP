@@ -16,7 +16,8 @@ const Dashboard = () => {
     const [coords, setCoords] = useState()
 
     const load = async e => {
-        setLoaded(await setStationData())
+        const rs = await setStationData()
+        setLoaded(rs)
     }
 
     const socket = io.connect("https://192.168.0.104:3001")

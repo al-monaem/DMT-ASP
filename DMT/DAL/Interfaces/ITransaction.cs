@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public interface ITransaction: ITicket
+    public interface ITransaction: ITicket, IRoute
     {
         Transaction Get();
         Transaction Update();

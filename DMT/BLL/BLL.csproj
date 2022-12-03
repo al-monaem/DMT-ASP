@@ -48,6 +48,7 @@
     <Compile Include="DTOs\LoginDTO.cs" />
     <Compile Include="DTOs\RequiredAttribute.cs" />
     <Compile Include="DTOs\StationDTO.cs" />
+    <Compile Include="DTOs\TicketDTO.cs" />
     <Compile Include="DTOs\TokenDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

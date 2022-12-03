@@ -18,5 +18,12 @@ namespace BLL.Services
 
             return stations;
         }
+        public static List<TicketDTO> GetTickets(string id)
+        {
+            var data = DataAccessFactory.TransactionDataAccess().Get(id);
+            var tickets = AutoMapperService<Ticket, TicketDTO>.MapList(data);
+
+            return tickets;
+        }
     }
 }

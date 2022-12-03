@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public interface ITicket : IRoute
+    public interface ITicket
     {
-        Ticket Get();
+        List<Ticket> Get();
+        List<Ticket> Get(string id);
     }
 }

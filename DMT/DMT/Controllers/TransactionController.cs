@@ -16,10 +16,18 @@ namespace DMT.Controllers
     {
         [HttpGet]
         [Route("api/stations")]
-        //[Logged]
+        [Logged]
         public HttpResponseMessage GetStations()
         {
             return Request.CreateResponse(HttpStatusCode.OK, TransactionService.GetStations());
+        }
+
+        [HttpGet]
+        [Route("api/tickets/{id}")]
+        [Logged]
+        public HttpResponseMessage GetTickets(string id)    
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, TransactionService.GetTickets(id));
         }
     }
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import TransactionHistory from '../MyTickets/TransactionHistory';
 import { ActiveTickets } from '../MyTickets/ActiveTickets';
+import { useAuth } from '../../Auth/AuthContext';
 
 const MyTickets = () => {
 
@@ -11,6 +12,8 @@ const MyTickets = () => {
         tabs: 'space-x-3 flex text-sm px-3 pt-2 border-b w-full relative',
     }
 
+    const { getTickets } = useAuth()
+
     const [selected, setSelected] = useState(1);
     const [indicatorWidth, setIndicatorWidth] = useState(0);
     const [indicatorPosition, setIndicatorPosition] = useState(0);
@@ -19,6 +22,8 @@ const MyTickets = () => {
 
     const [activeSlide, setActiveSlide] = useState(1);
     const swiper = useRef(null);
+
+    const [tickets, setTickets] = useState([]);
 
     const ref1 = useRef(null);
     const ref2 = useRef(null);
@@ -47,6 +52,10 @@ const MyTickets = () => {
             }
         }
     }, [selected]);
+
+    useEffect(() => {
+        setTickets(getTickets())
+    }, [])
 
     const onTabClick = (index) => {
         setSelected(index);
@@ -83,7 +92,7 @@ const MyTickets = () => {
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.7 }}
                         className='flex items-center justify-center h-full w-full'>
-                        <ActiveTickets swiper={swiper} activeSlide={activeSlide} setActiveSlide={setSlide} />
+                        <ActiveTickets tickets={tickets} swiper={swiper} activeSlide={activeSlide} setActiveSlide={setSlide} />
                     </motion.div>}
                 {selected === 2 &&
                     <motion.div

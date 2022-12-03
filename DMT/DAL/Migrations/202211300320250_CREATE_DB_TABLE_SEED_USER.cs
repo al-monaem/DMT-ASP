@@ -31,7 +31,7 @@
                     {
                         id = c.Int(nullable: false, identity: true),
                         route_id = c.Int(nullable: false),
-                        status = c.String(),
+                        status = c.String(defaultValue: "active"),
                     })
                 .PrimaryKey(t => t.id)
                 .ForeignKey("dbo.Routes", t => t.route_id, cascadeDelete: false)
@@ -73,7 +73,7 @@
                 c => new
                     {
                         id = c.Int(nullable: false, identity: true),
-                        status = c.String(),
+                        status = c.String(defaultValue: "paid"),
                         date = c.DateTime(nullable: false),
                         method = c.String(nullable: false, maxLength: 20),
                         user_id = c.String(nullable: false, maxLength: 128),
@@ -99,7 +99,7 @@
                         dob = c.DateTime(),
                         wallet = c.Int(nullable: false),
                         profilePic = c.String(),
-                        role = c.Int(nullable: false),
+                        role = c.Int(nullable: false, defaultValue:0),
                         resettoken = c.String(),
                     })
                 .PrimaryKey(t => t.id);

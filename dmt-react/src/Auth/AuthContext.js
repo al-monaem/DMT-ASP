@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
                 }
             })
             const data = await response.data
-            //debugger
+            debugger
             if (data) {
                 setStations(data)
                 return true
@@ -38,8 +38,23 @@ export const AuthProvider = ({ children }) => {
     }
 
     const setCredentials = () => {
-        setCurrentUser(localStorage.getItem('user'))
+        setCurrentUser(JSON.parse(localStorage.getItem('user')))
         setAccessToken(localStorage.getItem('accessToken'))
+    }
+
+    const getTickets = async () => {
+        try {
+            const response = await axios.get(`api/tickets/${currentUser.id}`, {
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            const data = await response.data
+            return data
+        } catch (error) {
+            console.log("station data error")
+            return []
+        }
     }
 
     const register = async (data) => {
@@ -104,7 +119,8 @@ export const AuthProvider = ({ children }) => {
         setCredentials,
         logout,
         setStationData,
-        stations,
+        getTickets,
+        stations
     }
 
     return (
