@@ -44,16 +44,37 @@ export const AuthProvider = ({ children }) => {
 
     const getTickets = async () => {
         try {
-            const response = await axios.get(`api/tickets/${currentUser.id}`, {
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
+            const response = await axios.get(`api/tickets/${currentUser.id}`)
             const data = await response.data
             return data
         } catch (error) {
             console.log("station data error")
             return []
+        }
+    }
+
+    const updateUser = async (user) => {
+        console.log(user)
+        try {
+            const response = await axios.post(`api/update`, JSON.stringify(user))
+            const data = await response.data
+            debugger
+            return data.message
+        } catch (error) {
+            console.log("station data error")
+            return []
+        }
+    }
+
+    const getUsers = async () => {
+        try {
+            debugger
+            const response = await axios.get(`api/admin/users`)
+            const data = await response.data
+            return data
+        } catch (error) {
+            console.log("station data error")
+            return null
         }
     }
 
@@ -120,7 +141,9 @@ export const AuthProvider = ({ children }) => {
         logout,
         setStationData,
         getTickets,
-        stations
+        stations,
+        getUsers,
+        updateUser
     }
 
     return (

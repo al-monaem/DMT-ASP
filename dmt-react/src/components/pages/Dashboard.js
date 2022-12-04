@@ -45,6 +45,8 @@ const Dashboard = () => {
 
     useEffect((e => {
         load()
+
+        return () => { socket.disconnect() }
     }), [])
 
     return (

@@ -23,17 +23,45 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
-            //List<User> users = new List<User>();
-            User user = new User()
+            List<User> users = new List<User>();
+            users.Add(new User()
             {
                 id = "Bishop",
                 name = "Al-monaem khan",
                 email = "shanto45777@gmail.com",
                 password = HashPassword.Hash("1234"),
                 dob = DateTime.Now.AddDays(-20),
+                phone = "01875609450",
+                role = 1
+            } );
+            users.Add(new User()
+            {
+                id = "Abyss",
+                name = "Al-monaem khan",
+                email = "shanto45777@gmail.com",
+                password = HashPassword.Hash("1234"),
+                dob = DateTime.Now.AddDays(-20),
                 phone = "01875609450"
-            } ;
-            context.Users.AddOrUpdate(user);
+            });
+            users.Add(new User()
+            {
+                id = "Alvin",
+                name = "Al-monaem khan",
+                email = "shanto45777@gmail.com",
+                password = HashPassword.Hash("1234"),
+                dob = DateTime.Now.AddDays(-20),
+                phone = "01875609450"
+            });
+            users.Add(new User()
+            {
+                id = "Sayeth",
+                name = "Al-monaem khan",
+                email = "shanto45777@gmail.com",
+                password = HashPassword.Hash("1234"),
+                dob = DateTime.Now.AddDays(-20),
+                phone = "01875609450"
+            });
+            context.Users.AddOrUpdate(users.ToArray());
 
             List<Station> stations = new List<Station>();
             stations.Add(new Station()

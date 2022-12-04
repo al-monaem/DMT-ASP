@@ -1,4 +1,5 @@
-﻿using BLL.Services;
+﻿using BLL.DTOs;
+using BLL.Services;
 using DMT.Auth;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,21 @@ namespace DMT.Controllers
         {
             var user = UserService.Get(id);
             return Request.CreateResponse(HttpStatusCode.OK, user);
+        }
+        [HttpGet]
+        [Route("api/admin/users")]
+        [Admin]
+        public HttpResponseMessage Get()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, UserService.Get());
+        }
+        [HttpPost]
+        [Route("api/update")]
+        [Logged]
+        public HttpResponseMessage Update(UserDTO user)
+        {
+            var message = "Update Successful";
+            return Request.CreateResponse(HttpStatusCode.OK, new {User= UserService.Update(user), message= message } );
         }
     }
 }

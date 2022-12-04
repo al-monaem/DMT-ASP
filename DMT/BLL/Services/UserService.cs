@@ -24,5 +24,13 @@ namespace BLL.Services
             var user = AutoMapperService<User, UserDTO>.MapSingle(data);
             return user;
         }
+        public static UserDTO Update(UserDTO u)
+        {
+            var user = AutoMapperService<UserDTO, User>.MapSingle(u);
+            var res = DataAccessFactory.UserDataAccess().Update(user);
+            var newUser = AutoMapperService<User, UserDTO>.MapSingle(res);
+
+            return newUser;
+        }
     }
 }
