@@ -20,7 +20,7 @@ const Dashboard = () => {
         setLoaded(rs)
     }
 
-    const socket = io.connect("https://192.168.0.104:3001")
+    const socket = io.connect("https://192.168.0.104:3001", { 'reconnection': false })
 
     socket.on("broadcast", (data) => {
         setCoords(data)

@@ -12,6 +12,7 @@ const Users = () => {
     const [loading, setLoading] = useState(true)
 
     const { getUsers, updateUser } = useAuth()
+    const [filteredUsers, setFilteredUsers] = useState(null)
 
     const style = {
         container: 'px-8 py-5 w-full h-full absolute flex flex-col items-center justify-center',
@@ -21,21 +22,33 @@ const Users = () => {
         header: 'sticky top-0 bg-white',
     }
 
-    const onSubmit = (id, email, role) => {
-        //console.log(id, email, role)
-        setUser(null)
-        users.map((u) => {
-            if (u.id === id) {
-                setUser({ ...u, role: role, email: email })
-            }
+    const setNewUser = (id, email, role) => {
+        return new Promise((resolve, reject) => {
+            users.map((u) => {
+                if (u.id === id) {
+                    setUser({ ...u, role: role, email: email })
+                }
+                else {
+                    setUser(null)
+                }
+            })
+            resolve();
         })
+    }
+
+    const onSubmit = async (id, email, role) => {
+        //console.log(id, email, role)
+        await setNewUser(id, email, role)
+        loadUsersOnUserChange(user)
     }
 
     const loadUsers = async () => {
         const data = await getUsers()
         setUsers(data)
+        setFilteredUsers(data)
         setLoading(false)
     }
+
     const loadUsersOnUserChange = async (user) => {
         setLoading(true)
         const data = await updateUser(user)
@@ -43,21 +56,42 @@ const Users = () => {
         setLoading(false)
     }
 
+    // useEffect(() => {
+    //     if (user)
+    //         loadUsersOnUserChange(user)
+    // }, [user])
+
     useEffect(() => {
-        if (user) {
-            loadUsersOnUserChange(user)
-        }
-    }, [user])
+
+        setLoading(false)
+
+    }, [filteredUsers])
 
     useEffect(() => {
         loadUsers()
     }, [])
 
+    const filter = (e) => {
+        if (e.target.value === "0")
+            setFilteredUsers(users.filter(u => { return u.role == 0 }))
+
+        else if (e.target.value === "1")
+            setFilteredUsers(users.filter(u => { return u.role == 1 }))
+
+        else
+            setFilteredUsers(users)
+    }
+
+    const onChangeRole = e => {
+        setLoading(true)
+        filter(e)
+    }
+
     return (
         !loading ?
             <div className={style.container}>
                 <div className='mb-3 w-full'>
-                    <SearchBar />
+                    <SearchBar onChangeRole={onChangeRole} />
                 </div>
                 <div className='w-full h-full'>
                     <div className={style.tableContainer}>
@@ -72,7 +106,7 @@ const Users = () => {
                                 </tr>
                             </thead>
                             <tbody className='w-full'>
-                                {users && users.map((user) => {
+                                {filteredUsers && filteredUsers.map((user) => {
                                     return <UserCard key={user.id} user={user} onSubmit={onSubmit} />
                                 })}
                             </tbody>

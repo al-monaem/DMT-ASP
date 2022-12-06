@@ -1,6 +1,6 @@
 import { AiOutlineSearch } from 'react-icons/ai'
 
-const SearchBar = () => {
+const SearchBar = ({ onChangeRole }) => {
 
     const style = {
         container: 'flex w-full p-4 bg-[#f6f5f8] rounded-md justify-between',
@@ -16,10 +16,10 @@ const SearchBar = () => {
                 <input className={style.input} type='text' placeholder='Search' />
             </div>
             <div className={style.block}>
-                <select className={style.input}>
+                <select className={style.input} onChange={onChangeRole}>
                     <option selected>User/Admin</option>
-                    <option>User</option>
-                    <option>Admin</option>
+                    <option value={0}>User</option>
+                    <option value={1}>Admin</option>
                 </select>
             </div>
             <div className={style.btn}>
