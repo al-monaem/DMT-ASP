@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar/Sidebar"
 import Topbar from "./Topbar/Topbar"
 import LoaderAnim from "../common/LoaderAnim"
 import Loader from '../common/Loader'
+import { InitializeToken } from '../../Auth/AxiosInstance'
 
 const Layout = () => {
 
@@ -12,12 +13,17 @@ const Layout = () => {
         container: "flex w-screen divide-x max-h-screen h-screen "
     }
 
-    const { currentUser, setCredentials } = useAuth()
+    const { currentUser, setCredentials, } = useAuth()
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        setCredentials()
+    const load = async e => {
+        await setCredentials()
+        InitializeToken()
         setLoading(false)
+    }
+
+    useEffect(() => {
+        load()
     }, [])
 
     return (

@@ -23,11 +23,19 @@ namespace DMT.Controllers
         }
 
         [HttpGet]
-        [Route("api/tickets/{id}")]
-        [Logged]
-        public HttpResponseMessage GetTickets(string id)    
+        [Route("api/transactions/{id}")]
+        [Admin]
+        public HttpResponseMessage GetTransactions(string id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, TransactionService.GetTickets(id));
+            return Request.CreateResponse(HttpStatusCode.OK, TransactionService.GetTransactions(id));
+        }
+
+        [HttpGet]
+        [Route("api/transactions")]
+        [Admin]
+        public HttpResponseMessage GetTransactionsWithUsers()    
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, TransactionService.GetTransactions());
         }
     }
 }

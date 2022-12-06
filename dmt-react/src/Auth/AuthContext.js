@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AxiosInstance, setToken } from './AxiosInstance'
+import { AxiosInstance, InitializeToken } from './AxiosInstance'
 
 const AuthContext = React.createContext()
 
@@ -43,26 +43,36 @@ export const AuthProvider = ({ children }) => {
     }
 
     const getTickets = async () => {
+        debugger
         try {
-            const response = await axios.get(`api/tickets/${currentUser.id}`)
+            const response = await axios.get(`api/transactions/${currentUser.id}`)
             const data = await response.data
             return data
         } catch (error) {
-            console.log("station data error")
-            return []
+            return null
+        }
+    }
+
+    const getTransactions = async () => {
+        try {
+            const response = await axios.get('api/transactions')
+            const data = await response.data
+            return data
+        } catch (error) {
+            return null
         }
     }
 
     const updateUser = async (user) => {
         console.log(user)
         try {
-            const response = await axios.post(`api/update`, JSON.stringify(user))
+            const response = await axios.post(`api/update`, user)
             const data = await response.data
             debugger
             return data.message
         } catch (error) {
             console.log("station data error")
-            return []
+            return null
         }
     }
 
@@ -91,15 +101,14 @@ export const AuthProvider = ({ children }) => {
     }
 
     const login = async (user) => {
+        console.log(user)
         debugger
         try {
-            const response = await axios.post("api/login", JSON.stringify(user), {
-                headers: {
-                    "Content-type": "application/json"
-                }
+            const response = await axios.post("api/login", user, {
+                "content-type": "application/json"
             })
             const data = await response.data
-            //debugger
+            debugger
             if (data && data.accessToken !== null) {
                 setAccessToken(data.accessToken)
                 setCurrentUser(data.User)
@@ -107,7 +116,7 @@ export const AuthProvider = ({ children }) => {
                 if (data.User) {
                     localStorage.setItem('user', JSON.stringify(data.User))
                     localStorage.setItem('accessToken', data.accessToken)
-                    navigate("/", { replace: true })
+                    navigate("/")
                 }
 
                 return { "message": "Error in server" }
@@ -124,8 +133,9 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('accessToken')
         localStorage.removeItem('user')
         try {
-            setToken(accessToken)
             const response = await axios.post("api/logout")
+            setCurrentUser(null)
+            setAccessToken("")
         } catch (error) {
 
         }
@@ -143,7 +153,8 @@ export const AuthProvider = ({ children }) => {
         getTickets,
         stations,
         getUsers,
-        updateUser
+        updateUser,
+        getTransactions
     }
 
     return (

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useAuth } from '../../Auth/AuthContext'
 import { CgMenuGridO } from "react-icons/cg"
 import { TbDotsVertical } from "react-icons/tb"
+import { MdCenterFocusWeak } from "react-icons/md"
 
 const MapToolkit = ({ onChangeDestination, onChangePickup }) => {
 
@@ -12,7 +13,7 @@ const MapToolkit = ({ onChangeDestination, onChangePickup }) => {
     const [pickupStations, setPickupStations] = useState(stations)
 
     const style = {
-        container: `relative ${showToolkit ? "bg-[#30D5C8] p-2 rounded-lg shadow-lg" : ""} flex flex-col`,
+        container: `relative ${showToolkit ? "bg-[#30D5C8] p-2 rounded-lg shadow-lg" : ""} w-full flex flex-col`,
         icon: `ml-auto p-2 rounded-full bg-[#30D5C8] text-white shadow-lg hover:cursor-pointer`,
         toottipContainer: 'bg-[#30D5C8] mt-2 pb-3 px-2 flex flex-col',
         tooltipBlock: 'flex flex-col space-y-2 text-sm',
@@ -25,6 +26,9 @@ const MapToolkit = ({ onChangeDestination, onChangePickup }) => {
                 className={style.icon}
                 onClick={() => setShowToolkit(!showToolkit)}>
                 <CgMenuGridO className='h-6 w-6' />
+            </div>
+            <div className='absolute right-0'>
+                <MdCenterFocusWeak />
             </div>
             {showToolkit &&
                 <div className={style.toottipContainer}>

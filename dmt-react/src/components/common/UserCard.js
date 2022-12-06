@@ -18,7 +18,10 @@ const UserCard = ({ user, onSubmit }) => {
     icon: 'ml-2 text-gray-400 p-1 rounded-lg hover:bg-gray-400 hover:text-white hover:transition hover:cursor-pointer',
     iconCheck: 'ml-2 text-gray-400 p-1 rounded-lg hover:bg-[#30D5C8] hover:text-white hover:transition hover:cursor-pointer',
     inputEmail: `${!editEmail ? "hover:cursor-default" : ""} p-2 focus:outline-[#30D5C8] rounded-md`,
-    inputRole: `${!editRole ? "hover:cursor-default" : ""} p-2 focus:outline-[#30D5C8] w-14 rounded-md`
+    inputRole: `${!editRole ? "hover:cursor-default" : ""} p-2 focus:outline-[#30D5C8] w-14 rounded-md`,
+    image: 'p-1 w-10 h-10 rounded-full',
+    name: 'flex items-center space-x-3',
+
   }
 
   const onClickEmail = (e) => {
@@ -43,7 +46,7 @@ const UserCard = ({ user, onSubmit }) => {
 
   return (
     <tr className={style.container}>
-      <td><div className='flex items-center space-x-3'><img className='p-1 w-10 h-10 rounded-full' src={user.profilePic} /><p>{user.id}</p></div></td>
+      <td><div className={style.name}><img className={style.image} src={user.profilePic} /><p>{user.id}</p></div></td>
 
       <td>
         <div className='flex items-center'>

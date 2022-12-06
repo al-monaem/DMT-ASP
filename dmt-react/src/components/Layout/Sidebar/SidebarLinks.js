@@ -61,6 +61,14 @@ const SidebarLinks = () => {
             <div className='space-y-2'>
                 <MenuLink
                     onClick={onClick}
+                    text="Dashboard"
+                    path="/admin/dashboard"
+                    icon={<RiDashboardFill className='w-4 h-4' />}
+                    animateFrom={animateFrom}
+                    animateTo={animateTo}
+                    transitionDuration={0.4} />
+                <MenuLink
+                    onClick={onClick}
                     text="Users"
                     path="/admin/users"
                     icon={<FaUsers className='w-4 h-4' />}

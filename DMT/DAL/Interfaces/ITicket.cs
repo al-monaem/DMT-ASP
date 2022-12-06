@@ -9,7 +9,7 @@ namespace DAL.Interfaces
 {
     public interface ITicket
     {
-        List<Ticket> Get();
-        List<Ticket> Get(string id);
+        List<Ticket> GetTickets();
+        List<Ticket> GetTickets(string id);
     }
 }

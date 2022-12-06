@@ -7,13 +7,13 @@ namespace DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class CREATE_DB_TABLE_SEED_USER : IMigrationMetadata
+    public sealed partial class MAX_LENGTH_USERS : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CREATE_DB_TABLE_SEED_USER));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(MAX_LENGTH_USERS));
         
         string IMigrationMetadata.Id
         {
-            get { return "202211300320250_CREATE_DB_TABLE_SEED_USER"; }
+            get { return "202212061154343_MAX_LENGTH_USERS"; }
         }
         
         string IMigrationMetadata.Source

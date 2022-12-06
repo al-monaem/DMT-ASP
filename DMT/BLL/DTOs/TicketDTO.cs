@@ -13,8 +13,6 @@ namespace BLL.DTOs
         public int route_id { get; set; }
         public string status { get; set; }
 
-        public virtual Route Route { get; set; }
-        public virtual List<Refund> Refunds { get; set; }
-        public virtual List<Transaction> Transactions { get; set; }
+        public virtual RouteDTO Route { get; set; }
     }
 }

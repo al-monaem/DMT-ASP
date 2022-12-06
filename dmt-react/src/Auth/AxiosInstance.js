@@ -1,11 +1,10 @@
 import axios from 'axios'
 
 export const AxiosInstance = axios.create({
-    baseURL: 'https://localhost:44361/',
-    headers: { Authorization: `${localStorage.getItem('accessToken')}`, "Content-type": "application/json" }
+    baseURL: 'https://localhost:44361/'
 });
 
-export const setToken = (token) => {
+export const InitializeToken = () => {
     //const auth = `Bearer ${token}`;
-    AxiosInstance.defaults.headers.common = { Authorization: `${token}` }
+    AxiosInstance.defaults.headers.common = { Authorization: `${localStorage.getItem('accessToken')}`, "Content-type": "application/json" }
 };

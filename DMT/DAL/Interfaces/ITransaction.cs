@@ -9,7 +9,8 @@ namespace DAL.Interfaces
 {
     public interface ITransaction: ITicket, IRoute
     {
-        Transaction Get();
+        List<Transaction> GetTransactions();
+        List<Transaction> GetTransactions(string userId);
         Transaction Update();
         Transaction Add();
     }

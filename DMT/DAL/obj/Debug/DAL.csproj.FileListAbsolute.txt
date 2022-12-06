@@ -10,7 +10,8 @@ G:\Projects\DMT-ASP\DMT\DAL\bin\Debug\EntityFramework.SqlServer.xml
 G:\Projects\DMT-ASP\DMT\DAL\obj\Debug\DAL.csproj.CopyComplete
 G:\Projects\DMT-ASP\DMT\DAL\obj\Debug\DAL.dll
 G:\Projects\DMT-ASP\DMT\DAL\obj\Debug\DAL.pdb
-G:\Projects\DMT-ASP\DMT\DAL\obj\Debug\DAL.Migrations.CREATE_DB_TABLE_SEED_USER.resources
+G:\Projects\DMT-ASP\DMT\DAL\obj\Debug\DAL.Migrations.CREATE_ALL.resources
 G:\Projects\DMT-ASP\DMT\DAL\obj\Debug\DAL.csproj.GenerateResource.cache
-G:\Projects\DMT-ASP\DMT\DAL\obj\Debug\DAL.Migrations.UPDATE_USERS.resources
-G:\Projects\DMT-ASP\DMT\DAL\obj\Debug\DAL.Migrations.UPDATE_STATIONS.resources
+G:\Projects\DMT-ASP\DMT\DAL\bin\Debug\Bogus.dll
+G:\Projects\DMT-ASP\DMT\DAL\bin\Debug\Bogus.xml
+G:\Projects\DMT-ASP\DMT\DAL\obj\Debug\DAL.Migrations.MAX_LENGTH_USERS.resources

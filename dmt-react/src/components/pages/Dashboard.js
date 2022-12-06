@@ -54,7 +54,7 @@ const Dashboard = () => {
             <div className='flex relative w-full h-full justify-center'>
                 <Map coords={coords} loaded={loaded} stations={stations} destination={destination} pickup={pickup} />
             </div>
-            <div className='absolute z-50 ml-3 mt-3'>
+            <div className='absolute'>
                 <MapToolkit onChangeDestination={onChangeDestination} onChangePickup={onChangePickup} />
             </div>
         </div>

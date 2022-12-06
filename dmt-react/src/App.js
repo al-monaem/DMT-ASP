@@ -9,15 +9,15 @@ import Login from "./components/pages/Login";
 import Users from "./components/pages/admin/Users";
 import './App.css'
 import Train from "./components/pages/Train";
+import Transactions from "./components/pages/admin/Transactions";
+import AdminDashboard from "./components/pages/admin/AdminDashboard";
 
 
 function App() {
 
   return (
     <>
-
       <Routes>
-
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
         <Route path="train" element={<Train />} />
@@ -30,7 +30,8 @@ function App() {
 
           <Route path="admin">
             <Route path="users" element={<Users />} />
-            <Route path="transactions" element={<Users />} />
+            <Route path="transactions" element={<Transactions />} />
+            <Route path="dashboard" element={<AdminDashboard />} />
           </Route>
         </Route>
 

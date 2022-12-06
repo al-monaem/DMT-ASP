@@ -96,3 +96,5 @@ G:\Projects\DMT-ASP\DMT\DMT\bin\EntityFramework.SqlServer.dll
 G:\Projects\DMT-ASP\DMT\DMT\bin\System.Web.Cors.dll
 G:\Projects\DMT-ASP\DMT\DMT\bin\System.Web.Http.Cors.dll
 G:\Projects\DMT-ASP\DMT\DMT\bin\System.Web.Http.Cors.xml
+G:\Projects\DMT-ASP\DMT\DMT\bin\Bogus.dll
+G:\Projects\DMT-ASP\DMT\DMT\bin\Bogus.xml

@@ -8,7 +8,7 @@ import { Navigate } from 'react-router-dom'
 const Login = () => {
     const style = {
         image: "ml-10 flex flex-col w-[50%] h-full visible",
-        from_container: "flex h-full w-full w-[50%] items-center justify-center relative",
+        from_container: "flex h-full w-[50%] items-center justify-center relative",
         container: "absolute flex justify-between w-full h-full bg-[#f0f2f5]"
     }
 

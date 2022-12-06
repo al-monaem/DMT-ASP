@@ -12,3 +12,5 @@ G:\Projects\DMT-ASP\DMT\BLL\bin\Debug\EntityFramework.xml
 G:\Projects\DMT-ASP\DMT\BLL\obj\Debug\BLL.csproj.CopyComplete
 G:\Projects\DMT-ASP\DMT\BLL\obj\Debug\BLL.dll
 G:\Projects\DMT-ASP\DMT\BLL\obj\Debug\BLL.pdb
+G:\Projects\DMT-ASP\DMT\BLL\bin\Debug\Bogus.dll
+G:\Projects\DMT-ASP\DMT\BLL\bin\Debug\Bogus.xml

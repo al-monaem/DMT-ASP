@@ -1,4 +1,5 @@
-﻿using BLL.DTOs;
+﻿using AutoMapper;
+using BLL.DTOs;
 using DAL;
 using DAL.EF.Model;
 using System;
@@ -18,12 +19,38 @@ namespace BLL.Services
 
             return stations;
         }
-        public static List<TicketDTO> GetTickets(string id)
+        public static List<TransactionDTO> GetTransactions(string id)
         {
-            var data = DataAccessFactory.TransactionDataAccess().Get(id);
-            var tickets = AutoMapperService<Ticket, TicketDTO>.MapList(data);
+            var data = DataAccessFactory.TransactionDataAccess().GetTransactions(id);
+            var transactions = AutoMapperService<Transaction, TransactionDTO>.MapListWithAllDependency(data); 
+            //List<TransactionDTO> transactions = new List<TransactionDTO>();
 
-            return tickets;
+            //foreach (var t in data)
+            //{
+            //    transactions.Add(new TransactionDTO()
+            //    {
+            //        date = t.date,
+            //        id = t.id,
+            //        method = t.method,
+            //        status = t.status,
+            //        Ticket = new TicketDTO()
+            //        {
+            //            id=t.Ticket.id,
+            //            route_id=t.Ticket.route_id,
+            //            status = t.Ticket.status,
+                  
+            //        }
+            //    });
+            //}
+
+            return transactions;
+        }
+        public static List<TransactionUserDTO> GetTransactions()
+        {
+            var data = DataAccessFactory.TransactionDataAccess().GetTransactions();
+            var transactions = AutoMapperService<Transaction, TransactionUserDTO>.MapListWithAllDependency(data);
+
+            return transactions;
         }
     }
 }

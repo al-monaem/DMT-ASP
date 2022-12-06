@@ -32,7 +32,7 @@ export const ActiveTickets = ({ tickets, swiper, activeSlide, setActiveSlide }) 
     }, [])
 
     return (
-        tickets.length > 0 ?
+        tickets ?
             (<div className={style.container}>
                 <Swiper
                     ref={swiper}
@@ -42,16 +42,18 @@ export const ActiveTickets = ({ tickets, swiper, activeSlide, setActiveSlide }) 
                     spaceBetween={30}
                     slidesPerView={3}>
                     {tickets.map((ticket, index) => {
-                        return <SwiperSlide className={style.swiperSlider}>
-                            <div className={style.slideContainer}>
-                                <motion.div
-                                    animate={activeSlide === 0 ? active : inactive}
-                                    transition={{ duration: 0.5 }}
-                                    className={style.slide}>
-                                    <MyTicket id={index} ticket={ticket} />
-                                </motion.div>
-                            </div>
-                        </SwiperSlide>
+                        if (ticket.Ticket.status.toLowerCase() === "active") {
+                            return <SwiperSlide className={style.swiperSlider}>
+                                <div className={style.slideContainer}>
+                                    <motion.div
+                                        animate={activeSlide === index ? active : inactive}
+                                        transition={{ duration: 0.5 }}
+                                        className={style.slide}>
+                                        <MyTicket id={index} ticket={ticket} />
+                                    </motion.div>
+                                </div>
+                            </SwiperSlide>
+                        }
                     })}
                 </Swiper>
             </div>) : <Loader />

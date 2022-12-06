@@ -17,7 +17,8 @@ const Users = () => {
         container: 'px-8 py-5 w-full h-full absolute flex flex-col items-center justify-center',
         tableContainer: 'relative h-full flex w-full overflow-y-auto',
         table: 'absolute w-full border-collapse',
-
+        headerRow: 'text-gray-400 h-12 text-left',
+        header: 'sticky top-0 bg-white',
     }
 
     const onSubmit = (id, email, role) => {
@@ -61,8 +62,8 @@ const Users = () => {
                 <div className='w-full h-full'>
                     <div className={style.tableContainer}>
                         <table className={style.table}>
-                            <thead className='sticky top-0 bg-white'>
-                                <tr className='text-gray-400 h-12 text-left'>
+                            <thead className={style.header}>
+                                <tr className={style.headerRow}>
                                     <th className='pl-2'><div className='flex items-center'><p>Name</p><HiChevronUpDown /></div></th>
                                     <th><div className='flex items-center'><p>Role</p><HiChevronUpDown /></div></th>
                                     <th>Email</th>

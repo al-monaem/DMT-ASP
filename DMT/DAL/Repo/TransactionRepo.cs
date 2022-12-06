@@ -22,12 +22,12 @@ namespace DAL.Repo
             throw new NotImplementedException();
         }
 
-        public Route Get()
+        public Route GetRoutes()
         {
             throw new NotImplementedException();
         }
 
-        public List<Ticket> Get(string id)
+        public List<Ticket> GetTickets(string id)
         {
             List<Transaction> transaction = db.Transactions.Where(x => x.Ticket.status.ToLower().Equals("active")).ToList();
             List<Ticket> ticket = new List<Ticket>();
@@ -50,14 +50,19 @@ namespace DAL.Repo
             throw new NotImplementedException();
         }
 
-        List<Ticket> ITicket.Get()
+        List<Transaction> ITransaction.GetTransactions()
+        {
+            return db.Transactions.ToList();
+        }
+
+        List<Ticket> ITicket.GetTickets()
         {
             throw new NotImplementedException();
         }
 
-        Transaction ITransaction.Get()
+        public List<Transaction> GetTransactions(string userId)
         {
-            throw new NotImplementedException();
+            return db.Transactions.Where(x=>x.user_id.Equals(userId)).ToList();
         }
     }
 }
