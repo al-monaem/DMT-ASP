@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import io from "socket.io-client"
+import { useAuth } from '../../Auth/AuthContext'
 import Loader from '../common/Loader'
 
 const Train = () => {
 
-    const socket = io.connect("https://192.168.0.104:3001")
+    const localhost = io("https://localhost:3001", { 'reconnection': false })
+    const android = io("https://192.168.0.104:3002", { 'reconnection': false })
+    const { mode } = useAuth()
 
     let coords = {
         lat: null,
@@ -15,6 +18,48 @@ const Train = () => {
     const [loaded, setLoaded] = useState(false)
     const [error, setError] = useState("")
 
+    const fixedLocation = [
+        { lat: 23.8073343, lng: 90.3688909 },
+        { lat: 23.8198167, lng: 90.3646337 },
+        { lat: 23.825528, lng: 90.364117 },
+        { lat: 23.8198167, lng: 90.3646337 },
+        { lat: 23.8073343, lng: 90.3688909 },
+        { lat: 23.7970495, lng: 90.3729062 },
+        { lat: 23.788592, lng: 90.376480 },
+    ]
+    const maxCount = 7;
+    let count = 0;
+    let reverse = false
+
+    useEffect(() => {
+        if (mode == 0) {
+            android.disconnect()
+            localhost.connect("https://localhost:3001")
+            localhost.on("connect", () => {
+                setInterval(() => {
+                    if (!reverse) {
+                        if (count < maxCount - 1)
+                            localhost.emit("sendViaLocalhost", fixedLocation[count++])
+                        else
+                            reverse = true
+                    }
+                    else {
+                        if (count > 0)
+                            localhost.emit("sendViaLocalhost", fixedLocation[count--])
+                        else
+                            reverse = false
+                    }
+                }, 2000)
+            })
+        }
+        if (mode == 1) {
+            android.connect()
+            localhost.disconnect()
+        }
+
+        return () => { localhost.disconnect(); android.disconnect() }
+    }, [mode])
+
     useEffect(() => {
         const interval = setInterval(() => {
             if (coords.lat && coords.lng)
@@ -24,11 +69,11 @@ const Train = () => {
                 //console.log(position)
                 coords.lat = position.coords.latitude
                 coords.lng = position.coords.longitude
-                socket.emit("send", coords)
+                android.emit("send", coords)
             }, showError);
 
             setLocation(coords)
-        }, 1000);
+        }, 5000);
         return () => clearInterval(interval);
     }, []);
 

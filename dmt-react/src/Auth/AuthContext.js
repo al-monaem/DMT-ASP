@@ -14,8 +14,13 @@ export const AuthProvider = ({ children }) => {
 
     const [currentUser, setCurrentUser] = useState(null)
     const [accessToken, setAccessToken] = useState("")
-    const [stations, setStations] = useState([])
+    const [stations, setStations] = useState(null)
+    const [mode, setMode] = useState(0)
     const navigate = useNavigate()
+
+    const onChangeMode = (mode) => {
+        setMode(mode)
+    }
 
     const setStationData = async e => {
         try {
@@ -154,7 +159,9 @@ export const AuthProvider = ({ children }) => {
         stations,
         getUsers,
         updateUser,
-        getTransactions
+        getTransactions,
+        onChangeMode,
+        mode
     }
 
     return (

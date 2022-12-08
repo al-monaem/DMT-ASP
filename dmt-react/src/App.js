@@ -11,6 +11,7 @@ import './App.css'
 import Train from "./components/pages/Train";
 import Transactions from "./components/pages/admin/Transactions";
 import AdminDashboard from "./components/pages/admin/AdminDashboard";
+import IsAdmin from "./Auth/IsAdmin";
 
 
 function App() {
@@ -27,11 +28,14 @@ function App() {
           <Route path="store" element={<Store />} />
           <Route path="profile" element={<Profile />} />
           <Route path="myTickets" element={<MyTickets />} />
-
-          <Route path="admin">
-            <Route path="users" element={<Users />} />
-            <Route path="transactions" element={<Transactions />} />
-            <Route path="dashboard" element={<AdminDashboard />} />
+        </Route>
+        <Route element={<Layout />}>
+          <Route element={<IsAdmin />}>
+            <Route path="admin">
+              <Route path="users" element={<Users />} />
+              <Route path="transactions" element={<Transactions />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+            </Route>
           </Route>
         </Route>
 

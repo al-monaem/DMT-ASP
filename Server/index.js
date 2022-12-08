@@ -2,40 +2,68 @@ const express = require('express')
 const app = express()
 const fs = require("fs");
 
-const https = require('https')
+const https1 = require('https')
+const https2 = require('https')
 const { Server } = require('socket.io')
 
-const server = https.createServer({
+const server1 = https1.createServer({
     key: fs.readFileSync("C:/Users/Bishop/key.pem"),
     cert: fs.readFileSync("C:/Users/Bishop/cert.pem"),
     requestCert: false,
     rejectUnauthorized: false
 }, app)
+// const server2 = https2.createServer({
+//     key: fs.readFileSync("C:/Users/Bishop/key.pem"),
+//     cert: fs.readFileSync("C:/Users/Bishop/cert.pem"),
+//     requestCert: false,
+//     rejectUnauthorized: false
+// }, app)
 
 const cors = require("cors")
-const port = "3001"
-const ip = "192.168.0.104"
+const port1 = "3001"
+const port2 = "3002"
+const ip1 = "localhost"
+const ip2 = "192.168.0.104"
 
 app.use(cors())
 
-const io = new Server(server, {
+const io1 = new Server(server1, {
     cors: {
         origin: "*"
     },
     secure: true
 })
+// const io2 = new Server(server2, {
+//     cors: {
+//         origin: "*"
+//     },
+//     secure: true
+// })
 
-io.on("connection", (socket) => {
+server1.listen(port1, ip1, () => {
+    console.log(`Listening to requests on ${ip1}:${port1}`);
+});
+// server2.listen(port2, ip2, () => {
+//     console.log(`Listening to requests on ${ip2}:${port2}`);
+// });
 
-    //console.log("user connected ", socket.id)
+io1.on("connection", (socket) => {
 
-    socket.on("send", (data) => {
+    console.log("user connected via Localhost")
+
+    socket.on("sendViaLocalhost", (data) => {
+        //console.log("asd")
         console.log(data)
-
-        io.broadcast.emit("brodcast", data)
+        socket.broadcast.emit("broadcastLocalhost", data)
     })
 })
 
-server.listen(port, ip, () => {
-    console.log(`Listening to requests on https://localhost:${port}`);
-});
+// io2.on("connection", (socket) => {
+
+//     console.log("user connected via Android")
+//     socket.on("sendViaAndroid", (data) => {
+//         console.log(data)
+
+//         socket.broadcast.emit("brodcast", data)
+//     })
+// })

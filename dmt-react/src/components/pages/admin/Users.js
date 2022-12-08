@@ -62,30 +62,24 @@ const Users = () => {
     // }, [user])
 
     useEffect(() => {
-
-        setLoading(false)
-
-    }, [filteredUsers])
-
-    useEffect(() => {
         loadUsers()
     }, [])
 
     const filter = (e) => {
         if (e.target.value === "0")
             setFilteredUsers(users.filter(u => { return u.role == 0 }))
-
         else if (e.target.value === "1")
             setFilteredUsers(users.filter(u => { return u.role == 1 }))
-
         else
             setFilteredUsers(users)
     }
-
     const onChangeRole = e => {
         setLoading(true)
         filter(e)
     }
+    useEffect(() => {
+        setLoading(false)
+    }, [filteredUsers])
 
     return (
         !loading ?

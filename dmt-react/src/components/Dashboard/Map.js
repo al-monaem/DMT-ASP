@@ -1,7 +1,8 @@
 import { GoogleMap, useJsApiLoader, MarkerF, DirectionsRenderer } from "@react-google-maps/api"
 import Details from "./Details"
 import Loader from "../common/Loader"
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import MarkerComponent from "../common/MarkerComponent"
 
 const GMap = ({ stations, destination, pickup }) => {
 
@@ -9,36 +10,45 @@ const GMap = ({ stations, destination, pickup }) => {
         lat: stations[0].latitude,
         lng: stations[0].longitude
     };
-    const [map, setMap] = useState(null)
 
-    const directionsService = new window.google.maps.DirectionsService();
-    //const directionsRenderer = new window.google.maps.DirectionsRenderer();
-    let directions;
+    const [coords, setCoords] = useState({});
+    const markerRef = useRef()
+
+    //let markerPos = null
+
+    const [map, setMap] = useState(null)
+    //const [currentLocation, setCurrentLocation] = useState(null)
+    //const [newLocation, setNewLocation] = useState(null)
+    //const [markerPos, setMarkerPos] = useState(null)
+
+    // const directionsService = new window.google.maps.DirectionsService();
+    // const directionsRenderer = new window.google.maps.DirectionsRenderer();
+    // let directions;
 
     const onLoad = useCallback(function callback(map) {
         setMap(map)
     }, [])
 
-    useEffect(e => {
-        if (destination && pickup) {
-            directionsService.route(
-                {
-                    origin: pickup,
-                    destination: destination,
-                    travelMode: window.google.maps.TravelMode.DRIVING
-                },
-                (result, status) => {
-                    if (status === window.google.maps.DirectionsStatus.OK) {
-                        this.setState({
-                            directions: result
-                        });
-                    } else {
-                        console.error(`error fetching directions ${result}`);
-                    }
-                }
-            );
-        }
-    }, [destination, pickup])
+    // useEffect(e => {
+    //     if (destination && pickup) {
+    //         directionsService.route(
+    //             {
+    //                 origin: pickup,
+    //                 destination: destination,
+    //                 travelMode: window.google.maps.TravelMode.DRIVING
+    //             },
+    //             (result, status) => {
+    //                 if (status === window.google.maps.DirectionsStatus.OK) {
+    //                     this.setState({
+    //                         directions: result
+    //                     });
+    //                 } else {
+    //                     console.error(`error fetching directions ${result}`);
+    //                 }
+    //             }
+    //         );
+    //     }
+    // }, [destination, pickup])
 
     const onUnmount = useCallback(function callback(map) {
         setMap(null)
@@ -68,12 +78,18 @@ const GMap = ({ stations, destination, pickup }) => {
                 {
                     featureType: "road.local",
                     stylers: [{ "visibility": "off" }]
-                }
+                },
+                {
+                    featureType: "road",
+                    elementType: "labels",
+                    stylers: [{ "visibility": "off" }]
+                },
                 ]
             }}
         >
-            {map && stations.map((data) => {
+            {map && stations.map((data, index) => {
                 return <MarkerF
+                    key={index}
                     icon={{
                         url: "https://cdn-icons-png.flaticon.com/512/8059/8059120.png",
                         scaledSize: new window.google.maps.Size(40, 40)
@@ -82,16 +98,16 @@ const GMap = ({ stations, destination, pickup }) => {
                     title={data.id}
                 />
             })}
-            <DirectionsRenderer
+            <MarkerComponent position={center} />
+            {/* <DirectionsRenderer
                 directions={directions}
-            />
+            /> */}
         </GoogleMap>
         <div className="flex items-center justify-center absolute bottom-0 z-50 mb-20 w-auto h-[8%]">
             <Details key={1} />
         </div>
     </>
 }
-
 
 const Map = ({ loaded, stations, destination, pickup }) => {
 

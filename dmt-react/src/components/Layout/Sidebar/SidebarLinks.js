@@ -13,7 +13,7 @@ const SidebarLinks = () => {
     const animateTo = { x: 0 }
 
     const [loading, setLoading] = useState(false)
-    const { logout } = useAuth()
+    const { logout, currentUser } = useAuth()
 
     const onLogout = (e) => {
         e.preventDefault()
@@ -58,32 +58,33 @@ const SidebarLinks = () => {
                 animateFrom={animateFrom}
                 animateTo={animateTo}
                 transitionDuration={0.4} />
-            <div className='space-y-2'>
-                <MenuLink
-                    onClick={onClick}
-                    text="Dashboard"
-                    path="/admin/dashboard"
-                    icon={<RiDashboardFill className='w-4 h-4' />}
-                    animateFrom={animateFrom}
-                    animateTo={animateTo}
-                    transitionDuration={0.4} />
-                <MenuLink
-                    onClick={onClick}
-                    text="Users"
-                    path="/admin/users"
-                    icon={<FaUsers className='w-4 h-4' />}
-                    animateFrom={animateFrom}
-                    animateTo={animateTo}
-                    transitionDuration={0.4} />
-                <MenuLink
-                    onClick={onClick}
-                    text="Transactions"
-                    path="/admin/transactions"
-                    icon={<AiOutlineTransaction className='w-4 h-4' />}
-                    animateFrom={animateFrom}
-                    animateTo={animateTo}
-                    transitionDuration={0.4} />
-            </div>
+            {currentUser.role == 1 &&
+                <div className='space-y-2'>
+                    <MenuLink
+                        onClick={onClick}
+                        text="Dashboard"
+                        path="/admin/dashboard"
+                        icon={<RiDashboardFill className='w-4 h-4' />}
+                        animateFrom={animateFrom}
+                        animateTo={animateTo}
+                        transitionDuration={0.4} />
+                    <MenuLink
+                        onClick={onClick}
+                        text="Users"
+                        path="/admin/users"
+                        icon={<FaUsers className='w-4 h-4' />}
+                        animateFrom={animateFrom}
+                        animateTo={animateTo}
+                        transitionDuration={0.4} />
+                    <MenuLink
+                        onClick={onClick}
+                        text="Transactions"
+                        path="/admin/transactions"
+                        icon={<AiOutlineTransaction className='w-4 h-4' />}
+                        animateFrom={animateFrom}
+                        animateTo={animateTo}
+                        transitionDuration={0.4} />
+                </div>}
             <MenuLink
                 text="Logout"
                 path="/logout"
