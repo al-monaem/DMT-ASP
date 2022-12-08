@@ -16,31 +16,114 @@ export const AuthProvider = ({ children }) => {
     const [accessToken, setAccessToken] = useState("")
     const [stations, setStations] = useState(null)
     const [mode, setMode] = useState(0)
+
+    const [routedetails, setRoutedetails] = useState([]);
+    const [paymentdetails, setPaymentdetails] = useState([]);
+
     const navigate = useNavigate()
 
     const onChangeMode = (mode) => {
         setMode(mode)
     }
 
-    const setStationData = async e => {
+    const getRoutes = async e => {
         try {
-            const response = await axios.get("api/stations", {
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-            const data = await response.data
-            debugger
-            if (data) {
-                setStations(data)
-                return true
-            }
-            return
-        } catch (error) {
-            console.log("station data error")
-            return false
+            InitializeToken()
+            const response = await axios.get("api/routes");
+            const data = await response.data;
+
+            return data
+        } catch {
+            console.log("station data error");
         }
     }
+
+    const setStationData = async (e) => {
+        try {
+            InitializeToken()
+            const response = await axios.get("api/stations", {
+                headers: {
+                    "Content-type": "application/json",
+                },
+            });
+            const data = await response.data;
+            //debugger
+            if (data) {
+                setStations(data);
+                return true;
+            }
+            return;
+        } catch (error) {
+            console.log("station data error");
+            return false;
+        }
+    };
+
+    const handlePayment = async (payment) => {
+        //debugger;
+        try {
+            const response = await axios.post(
+                "api/checkout",
+                JSON.stringify(payment),
+                {
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                }
+            );
+            const data = await response.data;
+            //debugger
+            if (data) {
+                setPaymentdetails(data);
+                return { payment_url: data.payment_url, status: response.status };
+            }
+            return;
+        } catch (error) {
+            console.log("data error");
+            return false;
+        }
+    };
+
+    const sendReset = async (email) => {
+        //debugger;
+        try {
+            const response = await axios.post("api/passwordreset", email, {
+                headers: {
+                    "Content-type": "application/json",
+                },
+            });
+            const data = await response.data;
+            //debugger
+            if (data) {
+                console.log();
+                return { message: data.message, status: response.status };
+            }
+            return;
+        } catch (error) {
+            //debugger
+            //console.log("route data error");
+            //return data.message;
+        }
+    };
+
+    const setRouteData = async (route) => {
+        //debugger;
+        InitializeToken()
+        try {
+            const response = await axios.get(`api/route/${route.id}`);
+            const data = await response.data;
+            debugger
+            if (data) {
+                console.log(data);
+                setRoutedetails(data);
+                return true;
+            }
+            return;
+        } catch (error) {
+            //console.log("route data error");
+            return false;
+        }
+    };
 
     const setCredentials = () => {
         setCurrentUser(JSON.parse(localStorage.getItem('user')))
@@ -94,14 +177,14 @@ export const AuthProvider = ({ children }) => {
     }
 
     const register = async (data) => {
+        debugger
         try {
-            const response = await axios.post("api/register", JSON.stringify(data), {
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-        } catch (error) {
+            const response = await axios.post("api/register", data)
+            const message = response.data
+            return message
 
+        } catch (error) {
+            return { error: "Error in server, Try again later!" }
         }
     }
 
@@ -161,7 +244,13 @@ export const AuthProvider = ({ children }) => {
         updateUser,
         getTransactions,
         onChangeMode,
-        mode
+        mode,
+        setRouteData,
+        routedetails,
+        sendReset,
+        handlePayment,
+        paymentdetails,
+        getRoutes
     }
 
     return (

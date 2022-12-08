@@ -22,9 +22,14 @@ namespace DAL.Repo
             throw new NotImplementedException();
         }
 
-        public Route GetRoutes()
+        public List<Route> GetRoutes()
         {
-            throw new NotImplementedException();
+            return db.Routes.ToList();
+        }
+
+        public Route GetRoute(int id)
+        {
+            return db.Routes.Find(id);
         }
 
         public List<Ticket> GetTickets(string id)

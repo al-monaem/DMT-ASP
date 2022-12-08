@@ -37,5 +37,23 @@ namespace DMT.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, TransactionService.GetTransactions());
         }
+
+        [HttpGet]
+        [Route("api/routes")]
+        [Logged]
+        public HttpResponseMessage GetRoutes()
+        
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, TransactionService.GetRoutes());
+        }
+
+        [HttpGet]
+        [Route("api/route/{id}")]
+        [Logged]
+        public HttpResponseMessage GetRoute(int id)
+
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, TransactionService.GetRoute(id));
+        }
     }
 }

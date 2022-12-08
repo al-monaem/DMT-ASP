@@ -9,7 +9,8 @@ namespace DAL.Interfaces
 {
     public interface IRoute
     {
-        Route GetRoutes();
+        List<Route> GetRoutes();
+        Route GetRoute(int id);
         List<Station> GetStations();
     }
 }

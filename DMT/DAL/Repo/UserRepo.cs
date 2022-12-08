@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.ModelBinding;
 
 namespace DAL.Repo
 {
@@ -44,6 +46,13 @@ namespace DAL.Repo
         public User Get(string id)
         {
             return db.Users.Find(id);
+        }
+
+        public int Register(User user)
+        {
+            user.password = HashPassword.Hash(user.password);
+            db.Users.Add(user);
+            return db.SaveChanges();
         }
 
         public User Update(User obj)

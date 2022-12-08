@@ -59,5 +59,13 @@ namespace BLL.Services
                 return true;
             return false;
         }
+
+        public static int Register(UserDTO user)
+        {
+            var data = AutoMapperService<UserDTO, User>.MapSingle(user);
+            var res = DataAccessFactory.AuthDataAccess().Register(data);
+
+            return res;
+        }
     }
 }

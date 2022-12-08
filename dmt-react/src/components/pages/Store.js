@@ -1,40 +1,56 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Ticket from "../Ticket";
+import Ticket from "../Store/Ticket";
+import Quickbuy from "../Store/Quickbuy";
+import { useAuth } from "../../Auth/AuthContext";
+import Loader from "../common/Loader";
 
 const style = {
-    table: "table-auto h-full w-[70%] text-gray-700 divide-y border text-center",
-    btn: "bg-sky-500 text-white font-semibold rounded-lg px-5 py-2",
-    container: "w-full flex items-center justify-center mt-10"
-}
+  table: "table-auto h-full w-[70%] text-gray-700 divide-y border text-center",
+  btn: "bg-sky-500 text-white font-semibold rounded-lg px-5 py-2",
+  container: "w-full flex items-center justify-center mt-10",
+};
 
-const BuyTicket = () => {
+const Store = () => {
 
-    useEffect(() => {
-        //getList();
-    }, []);
+  const [routes, setRoutes] = useState([]);
+  const { getRoutes } = useAuth()
 
-    const [Records, setRecords] = useState([]);
-    const [Stations, setStations] = useState([]);
+  const [loading, setLoading] = useState(true)
 
-    async function getList() {
-        const raw = await fetch("http://127.0.0.1:8000/api/buyTicket", {
-            headers: {
-                method: 'post',
-            }
-        });
-        const data = await raw.json();
-        //console.log(data.records);
+  const load = async e => {
+    var data = await getRoutes()
+    setRoutes(data)
+    setLoading(false)
+  }
 
-        setRecords(data.records);
-        setStations(data.stations);
-    }
+  useEffect(() => {
+    load()
+  }, []);
 
-    return (
-        <div>
-            <Ticket />
+  return (
+    loading ? <Loader /> :
+      <div className="flex w-full h-full px-3 py-6">
+        <div className="w-[30%]">
+          <Quickbuy routes={routes} />
         </div>
-    )
-}
+        <div className="relative ml-auto w-[40%] mr-8 overflow-scroll hover:cursor-pointer">
+          <div className="absolute space-y-5 h-full overflow-y-auto w-full pr-2">
+            <label className="bg-[#30D5C8] rounded-lg shadow-lg px-4 py-2 font-semibold text-sm divide-gray-700">
+              All Tickets
+            </label>
+            {routes.map((route) => (
+              <Ticket
+                route={route.id}
+                station1={route.station_1}
+                station2={route.station_2}
+                price={route.price}
+                key={route.id}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+  );
+};
 
-export default BuyTicket
+export default Store;

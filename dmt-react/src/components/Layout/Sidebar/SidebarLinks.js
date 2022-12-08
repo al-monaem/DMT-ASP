@@ -84,6 +84,14 @@ const SidebarLinks = () => {
                         animateFrom={animateFrom}
                         animateTo={animateTo}
                         transitionDuration={0.4} />
+                    <MenuLink
+                        onClick={onClick}
+                        text="Misc"
+                        path="/admin/misc"
+                        icon={<AiOutlineTransaction className='w-4 h-4' />}
+                        animateFrom={animateFrom}
+                        animateTo={animateTo}
+                        transitionDuration={0.4} />
                 </div>}
             <MenuLink
                 text="Logout"

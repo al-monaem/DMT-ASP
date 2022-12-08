@@ -52,5 +52,21 @@ namespace BLL.Services
 
             return transactions;
         }
+
+        public static List<RouteDTO> GetRoutes()
+        {
+            var data = DataAccessFactory.TransactionDataAccess().GetRoutes();
+            var routes = AutoMapperService<Route, RouteDTO>.MapListWithAllDependency(data);
+
+            return routes;
+        }
+
+        public static RouteDTO GetRoute(int id)
+        {
+            var data = DataAccessFactory.TransactionDataAccess().GetRoute(id);
+            var route = AutoMapperService<Route, RouteDTO>.MapSingleWithAllDependency(data);
+
+            return route;
+        }
     }
 }

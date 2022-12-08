@@ -11,46 +11,13 @@ const GMap = ({ stations, destination, pickup }) => {
         lng: stations[0].longitude
     };
 
-    const [coords, setCoords] = useState({});
-    const markerRef = useRef()
-
-    //let markerPos = null
-
     const [map, setMap] = useState(null)
-    //const [currentLocation, setCurrentLocation] = useState(null)
-    //const [newLocation, setNewLocation] = useState(null)
-    //const [markerPos, setMarkerPos] = useState(null)
-
-    // const directionsService = new window.google.maps.DirectionsService();
-    // const directionsRenderer = new window.google.maps.DirectionsRenderer();
-    // let directions;
 
     const onLoad = useCallback(function callback(map) {
         setMap(map)
     }, [])
 
-    // useEffect(e => {
-    //     if (destination && pickup) {
-    //         directionsService.route(
-    //             {
-    //                 origin: pickup,
-    //                 destination: destination,
-    //                 travelMode: window.google.maps.TravelMode.DRIVING
-    //             },
-    //             (result, status) => {
-    //                 if (status === window.google.maps.DirectionsStatus.OK) {
-    //                     this.setState({
-    //                         directions: result
-    //                     });
-    //                 } else {
-    //                     console.error(`error fetching directions ${result}`);
-    //                 }
-    //             }
-    //         );
-    //     }
-    // }, [destination, pickup])
-
-    const onUnmount = useCallback(function callback(map) {
+    const onUnmount = useCallback(function callback() {
         setMap(null)
     }, [])
 
@@ -99,9 +66,6 @@ const GMap = ({ stations, destination, pickup }) => {
                 />
             })}
             <MarkerComponent position={center} />
-            {/* <DirectionsRenderer
-                directions={directions}
-            /> */}
         </GoogleMap>
         <div className="flex items-center justify-center absolute bottom-0 z-50 mb-20 w-auto h-[8%]">
             <Details key={1} />

@@ -4,8 +4,12 @@ import { HiChevronUpDown } from 'react-icons/hi2'
 import SearchBar from '../../common/SearchBar'
 import { useAuth } from '../../../Auth/AuthContext'
 import Loader from "../../common/Loader"
+import { createWorkerFactory, useWorker } from '@shopify/react-web-worker';
 
 const Users = () => {
+
+    //const createWorker = createWorkerFactory(() => import("./Users"));
+    //const worker = useWorker(createWorker);
 
     const [user, setUser] = useState(null)
     const [users, setUsers] = useState(null)
@@ -44,6 +48,7 @@ const Users = () => {
 
     const loadUsers = async () => {
         const data = await getUsers()
+        //const data = await worker.UserWorker()
         setUsers(data)
         setFilteredUsers(data)
         setLoading(false)
@@ -52,7 +57,8 @@ const Users = () => {
     const loadUsersOnUserChange = async (user) => {
         setLoading(true)
         const data = await updateUser(user)
-        await loadUsers()
+        //await loadUsers()
+
         setLoading(false)
     }
 

@@ -11,6 +11,7 @@ import './App.css'
 import Train from "./components/pages/Train";
 import Transactions from "./components/pages/admin/Transactions";
 import AdminDashboard from "./components/pages/admin/AdminDashboard";
+import Misc from "./components/pages/admin/Misc";
 import IsAdmin from "./Auth/IsAdmin";
 
 
@@ -24,7 +25,7 @@ function App() {
         <Route path="train" element={<Train />} />
 
         <Route element={<Layout />}>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard />} exact />
           <Route path="store" element={<Store />} />
           <Route path="profile" element={<Profile />} />
           <Route path="myTickets" element={<MyTickets />} />
@@ -35,13 +36,11 @@ function App() {
               <Route path="users" element={<Users />} />
               <Route path="transactions" element={<Transactions />} />
               <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="misc" element={<Misc />} />
             </Route>
           </Route>
         </Route>
 
-        <Route path="admin">
-          <Route path=""></Route>
-        </Route>
       </Routes>
     </>
   );
