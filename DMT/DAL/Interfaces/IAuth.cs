@@ -11,5 +11,6 @@ namespace DAL.Interfaces
     {
         User Authenticate(string email, string password);
         int Register(User user);
+        int UpdatePassword(string id, string currentaPassword, string newPassword);
     }
 }

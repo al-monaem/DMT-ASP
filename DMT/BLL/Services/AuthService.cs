@@ -60,12 +60,17 @@ namespace BLL.Services
             return false;
         }
 
-        public static int Register(UserDTO user)
+        public static int Register(UserRegisterDTO user)
         {
-            var data = AutoMapperService<UserDTO, User>.MapSingle(user);
+            var data = AutoMapperService<UserRegisterDTO, User>.MapSingle(user);
             var res = DataAccessFactory.AuthDataAccess().Register(data);
 
             return res;
+        }
+
+        public static int UpdatePassword(string id, string currentPassword, string newPassword)
+        {
+            return DataAccessFactory.AuthDataAccess().UpdatePassword(id, currentPassword, newPassword);
         }
     }
 }

@@ -152,15 +152,51 @@ export const AuthProvider = ({ children }) => {
     }
 
     const updateUser = async (user) => {
-        console.log(user)
+
         try {
-            const response = await axios.post(`api/update`, user)
+            var response = await axios.post(`api/update`, user)
             const data = await response.data
-            debugger
-            return data.message
+            if (data.success.length > 0) {
+                setCurrentUser(data.User)
+            }
+            return data
         } catch (error) {
-            console.log("station data error")
-            return null
+            //console.log("station data error")
+            return { error: "Could not update", success: "" }
+        }
+    }
+
+    const uploadImage = async (image) => {
+        debugger
+        var formdata = new FormData()
+        formdata.append("image", image)
+        try {
+            const response = await axios.post("https://api.imgbb.com/1/upload?key=9d114e45a6fe1705ae2311bc729f758e",
+                formdata,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Authorization: ""
+                    }
+                }
+            )
+            const data = response.data
+            const user = { ...currentUser, profilePic: data.image.url }
+            return updateUser(user)
+        } catch {
+            return { error: "Error uploading picture" }
+        }
+    }
+
+    const updatePassword = async (user) => {
+        InitializeToken()
+        try {
+            debugger
+            const response = await axios.post("api/updatePassword", user)
+            const data = response.data
+            return data
+        } catch {
+            return { error: "Error updating password" }
         }
     }
 
@@ -171,7 +207,7 @@ export const AuthProvider = ({ children }) => {
             const data = await response.data
             return data
         } catch (error) {
-            console.log("station data error")
+            //console.log("station data error")
             return null
         }
     }
@@ -250,7 +286,9 @@ export const AuthProvider = ({ children }) => {
         sendReset,
         handlePayment,
         paymentdetails,
-        getRoutes
+        getRoutes,
+        uploadImage,
+        updatePassword
     }
 
     return (

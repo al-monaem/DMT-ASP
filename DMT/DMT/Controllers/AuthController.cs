@@ -3,6 +3,7 @@ using BLL.Services;
 using DMT.Auth;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -36,7 +37,7 @@ namespace DMT.Controllers
 
         [HttpPost]
         [Route("api/register")]
-        public HttpResponseMessage Register(UserDTO user)
+        public HttpResponseMessage Register(UserRegisterDTO user)
         {
             try
             {
@@ -63,6 +64,14 @@ namespace DMT.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, new { success = "", error = error, modelState = ModelState });
                 }
                 AuthService.Register(user);
+
+                string body = string.Empty;
+                using (StreamReader reader = File.OpenText("G:\\Projects\\DMT-ASP\\DMT\\DMT\\Email Template\\RegistrationConfirmed.html"))
+                {
+                    body = reader.ReadToEnd();
+                }
+
+                MailController.Send(user.email,"Registration Completed", body);
                 return Request.CreateResponse(HttpStatusCode.OK, new { success = "User registered successfully", error="" });
             }
             catch(Exception e)

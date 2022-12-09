@@ -19,6 +19,9 @@ const Sidebar = () => {
     return (
         loading ? <LoaderAnim /> :
             <div className='flex flex-col h-full'>
+                <div className='border-b flex items-center justify-center'>
+                    <img className='h-24' src='/dmt-logo.png' />
+                </div>
                 <div className="p-5">
                     <SidebarLinks onClick={onClick} />
                 </div>

@@ -55,9 +55,39 @@ namespace DAL.Repo
             return db.SaveChanges();
         }
 
+        public int UpdatePassword(string id, string currentPassword, string newPassword)
+        {
+            var user = db.Users.FirstOrDefault(u => u.id.Equals(id));
+
+            if(user.password.Equals(HashPassword.Hash(currentPassword)))
+            {
+                user.password = HashPassword.Hash(newPassword);
+                db.Entry(user).CurrentValues.SetValues(user);
+                return db.SaveChanges();
+            }
+
+            return 0;
+        }
+
         public User Update(User obj)
         {
             var user = db.Users.FirstOrDefault(u => u.id.Equals(obj.id));
+            if(user.role == 0)
+            {
+                obj.id = user.id;
+                obj.password = user.password;
+                obj.email = user.email;
+                obj.role = user.role;
+                obj.resettoken = user.resettoken;
+                obj.wallet = user.wallet;
+                obj.registrationDate = user.registrationDate;
+            }
+            else if(user.role == 1)
+            {
+                obj.password = user.password;
+                obj.role = user.role;
+                obj.resettoken = user.resettoken;
+            }
             db.Entry(user).CurrentValues.SetValues(obj);
             db.SaveChanges();
             return user;
