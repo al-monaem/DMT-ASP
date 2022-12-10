@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 import { useAuth } from '../../Auth/AuthContext';
 import { motion, AnimatePresence } from "framer-motion"
 import Loader from "../common/Loader"
+import { ToastContainer, toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 
 const Security = () => {
 
     const [loading, setLoading] = useState(false)
     const { updatePassword, currentUser } = useAuth()
-
-    const [error, setError] = useState("")
-    const [success, setSuccess] = useState("")
 
     const [user, setUser] = useState({
         id: currentUser.id,
@@ -28,9 +27,6 @@ const Security = () => {
     }
 
     const onChange = (e) => {
-        setError("")
-        setSuccess("")
-
         setUser({
             ...user,
             [e.target.name]: e.target.value
@@ -38,16 +34,34 @@ const Security = () => {
     }
 
     const onUpdate = async () => {
+        debugger
         setLoading(true)
         const msg = await updatePassword(user)
-
-        debugger
-        setSuccess(msg.success)
-
-        if (msg.error.length > 0) {
-            setError(msg.error)
-        }
         setLoading(false)
+        if (msg.error.length > 0) {
+            toast.error(msg.error, {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+        else {
+            toast.success(msg.success, {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
     }
 
     return (
@@ -73,17 +87,6 @@ const Security = () => {
                             <label className={style.label}>New Password</label>
                             <input name='newPassword' type="password" className={style.input} onChange={(e) => onChange(e)} />
                         </div>
-
-                        {error && error.length > 0 &&
-                            <div className='text-red-500'>
-                                {error}
-                            </div>
-                        }
-                        {success && success.length > 0 &&
-                            <div className='text-green-500'>
-                                {success}
-                            </div>
-                        }
 
                         <div>
                             <button onClick={() => onUpdate()} className='text-white font-semibold border rounded-xl px-4 py-2 bg-[#30D5C8]'>Update</button>

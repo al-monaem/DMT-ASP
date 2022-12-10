@@ -13,43 +13,44 @@ const style = {
 const Store = () => {
 
   const [routes, setRoutes] = useState([]);
-  const { getRoutes } = useAuth()
+  const { getRoutes } = useAuth();
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
-  const load = async e => {
-    var data = await getRoutes()
-    setRoutes(data)
-    setLoading(false)
-  }
+  const load = async (e) => {
+    var data = await getRoutes();
+    setRoutes(data);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    load()
+    load();
   }, []);
 
-  return (
-    loading ? <Loader /> :
-      <div className="flex w-full h-full px-3 py-6">
-        <div className="w-[30%]">
-          <Quickbuy routes={routes} />
-        </div>
-        <div className="relative ml-auto w-[40%] mr-8 overflow-scroll hover:cursor-pointer">
-          <div className="absolute space-y-5 h-full overflow-y-auto w-full pr-2">
-            <label className="bg-[#30D5C8] rounded-lg shadow-lg px-4 py-2 font-semibold text-sm divide-gray-700">
-              All Tickets
-            </label>
-            {routes.map((route) => (
-              <Ticket
-                route={route.id}
-                station1={route.station_1}
-                station2={route.station_2}
-                price={route.price}
-                key={route.id}
-              />
-            ))}
-          </div>
+  return loading ? (
+    <Loader />
+  ) : (
+    <div className="flex w-full h-full px-3 py-6">
+      <div className="w-[30%]">
+        <Quickbuy routes={routes} />
+      </div>
+      <div className="relative ml-auto w-[40%] mr-8 overflow-scroll hover:cursor-pointer">
+        <div className="absolute space-y-5 h-full overflow-y-auto w-full pr-2">
+          <label className="bg-[#30D5C8] rounded-lg shadow-lg px-4 py-2 font-semibold text-sm divide-gray-700">
+            All Tickets
+          </label>
+          {routes.map((route) => (
+            <Ticket
+              route={route.id}
+              station1={route.station_1}
+              station2={route.station_2}
+              price={route.price}
+              key={route.id}
+            />
+          ))}
         </div>
       </div>
+    </div>
   );
 };
 

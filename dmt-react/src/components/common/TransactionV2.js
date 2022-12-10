@@ -22,7 +22,9 @@ const TransactionV2 = ({ transaction }) => {
                     <p className={style.name}>{transaction.User.id}</p>
                 </div>
             </td>
-            <td><div><p>{transaction.date.split("T")[0]}</p><p className='font-light text-xs'>{transaction.date.split("T")[1].split(".")[0]}</p></div></td>
+            <td><div><p>{transaction.date.split(" ")[0]}</p>
+                {/* <p className='font-light text-xs'>{transaction.date.split(" ")[1].split(".")[0]}</p> */}
+            </div></td>
             <td>{transaction.transaction_id}</td>
             <td>{transaction.Ticket.Route.price} &nbsp; BDT</td>
             <td className={`${transaction.status.toLowerCase() === "paid" ? "text-green-400" : "text-orange-400"}`}>{transaction.status.toUpperCase()}</td>

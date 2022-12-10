@@ -11,5 +11,6 @@ namespace DAL.Interfaces
     {
         List<Ticket> GetTickets();
         List<Ticket> GetTickets(string id);
+        Ticket GetTicketByRouteId(int id);
     }
 }

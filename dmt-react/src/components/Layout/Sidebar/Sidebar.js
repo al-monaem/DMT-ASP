@@ -7,7 +7,7 @@ import { useAuth } from '../../../Auth/AuthContext'
 const Sidebar = () => {
 
     const [loading, setLoading] = useState(false)
-    const { logout } = useAuth()
+    const { logout, currentUser } = useAuth()
 
     const onClick = (e) => {
         e.preventDefault()
@@ -25,9 +25,10 @@ const Sidebar = () => {
                 <div className="p-5">
                     <SidebarLinks onClick={onClick} />
                 </div>
-                <div className='mt-auto mb-10 py-2 mx-3 shadow-lg rounded-lg bg-[#30D5C8]'>
-                    <SidebarAD size={{ h: "h-24", w: "w-full" }} />
-                </div>
+                {currentUser.role == 0 &&
+                    <div className='mt-auto mb-10 py-2 mx-3 shadow-lg rounded-lg bg-[#30D5C8]'>
+                        <SidebarAD size={{ h: "h-24", w: "w-full" }} />
+                    </div>}
             </div>
     )
 }

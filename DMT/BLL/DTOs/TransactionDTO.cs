@@ -18,5 +18,6 @@ namespace BLL.DTOs
         public string transaction_id { get; set; }
 
         public virtual TicketDTO Ticket { get;set; }
+        public virtual UserDTO User { get; set; }
     }
 }

@@ -5,6 +5,8 @@ import { TbEdit } from 'react-icons/tb'
 import { IoCheckmarkDone } from "react-icons/io5"
 import { useAuth } from '../../Auth/AuthContext'
 import Loader from '../common/Loader'
+import { ToastContainer, toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 
 const Bio = ({ user }) => {
 
@@ -23,8 +25,6 @@ const Bio = ({ user }) => {
     const { updateUser } = useAuth()
 
     const [validation, setValidation] = useState(null)
-    const [error, setError] = useState("")
-    const [success, setSuccess] = useState("")
 
     const nameRef = useRef(null)
     const phoneRef = useRef(null)
@@ -36,9 +36,7 @@ const Bio = ({ user }) => {
     }
 
     const onChange = (e) => {
-        setError("")
         setValidation(null)
-        setSuccess("")
 
         setCurrentUser({
             ...currentUser,
@@ -50,23 +48,37 @@ const Bio = ({ user }) => {
         setLoading(true)
         const msg = await updateUser(currentUser)
 
-        setLoading(false)
-        setSuccess(msg.success)
-
         if (msg.modelState) {
             setValidation(msg.error)
-            setError("")
         }
         else if (msg.error.length > 0) {
             setValidation(null)
-            setError(msg.error)
+            toast.error(msg.error, {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
         else {
-            Notification.requestPermission(perm => {
-                if (perm === "granted")
-                    new Notification("Profile Updated Successfully")
-            })
+            setValidation(null)
+            toast.success(msg.success, {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
+
+        setLoading(false)
     }
 
     const onUpload = (e) => {
@@ -144,11 +156,6 @@ const Bio = ({ user }) => {
                         {validation && validation.other &&
                             <div className='text-red-500'>
                                 {validation.other}
-                            </div>
-                        }
-                        {success.length > 0 &&
-                            <div className='text-green-500'>
-                                {success}
                             </div>
                         }
 

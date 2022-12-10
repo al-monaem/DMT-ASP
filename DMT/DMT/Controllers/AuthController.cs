@@ -19,8 +19,18 @@ namespace DMT.Controllers
         [Route("api/login")]
         public HttpResponseMessage Login(LoginDTO user)
         {
-            var token = AuthService.Authenticate(user);
-            return Request.CreateResponse(HttpStatusCode.OK, token);
+            try
+            {
+                var token = AuthService.Authenticate(user);
+                if(token == null)
+                    return Request.CreateResponse(HttpStatusCode.OK, new { success = "", error = "Email or password is incorrect" });
+               
+                return Request.CreateResponse(HttpStatusCode.OK, new { success = token, error = "" });
+            }
+            catch(Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { success = "", error = "Server under maintenance" });
+            }
         }
 
         [Logged]

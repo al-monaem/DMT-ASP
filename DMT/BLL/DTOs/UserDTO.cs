@@ -21,7 +21,6 @@ namespace BLL.DTOs
         public string phone { get; set; }
         [StringLength(13, MinimumLength =13)]
         public string nid { get; set; }
-        [Required]
         public DateTime? dob { get; set; }
         public int wallet { get; set; }
         public string profilePic { get; set; }

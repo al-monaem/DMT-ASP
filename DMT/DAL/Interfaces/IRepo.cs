@@ -10,7 +10,7 @@ namespace DAL.Interfaces
     {
         List<CLASS> Get();
         CLASS Get(PARAM id);
-        CLASS Update(CLASS obj);
+        CLASS Update(CLASS obj, string token);
         bool Delete(PARAM id);
         bool Add(CLASS obj);
     }

@@ -23,32 +23,13 @@ namespace BLL.Services
         {
             var data = DataAccessFactory.TransactionDataAccess().GetTransactions(id);
             var transactions = AutoMapperService<Transaction, TransactionDTO>.MapListWithAllDependency(data); 
-            //List<TransactionDTO> transactions = new List<TransactionDTO>();
-
-            //foreach (var t in data)
-            //{
-            //    transactions.Add(new TransactionDTO()
-            //    {
-            //        date = t.date,
-            //        id = t.id,
-            //        method = t.method,
-            //        status = t.status,
-            //        Ticket = new TicketDTO()
-            //        {
-            //            id=t.Ticket.id,
-            //            route_id=t.Ticket.route_id,
-            //            status = t.Ticket.status,
-                  
-            //        }
-            //    });
-            //}
 
             return transactions;
         }
-        public static List<TransactionUserDTO> GetTransactions()
+        public static List<TransactionDTO> GetTransactions()
         {
             var data = DataAccessFactory.TransactionDataAccess().GetTransactions();
-            var transactions = AutoMapperService<Transaction, TransactionUserDTO>.MapListWithAllDependency(data);
+            var transactions = AutoMapperService<Transaction, TransactionDTO>.MapListWithAllDependency(data);
 
             return transactions;
         }
@@ -67,6 +48,15 @@ namespace BLL.Services
             var route = AutoMapperService<Route, RouteDTO>.MapSingleWithAllDependency(data);
 
             return route;
+        }
+
+        public static TransactionDTO Checkout(GatewayDTO details)
+        
+        {
+            var data = DataAccessFactory.TransactionDataAccess().Checkout(details.user_id, details.route_id, details.paymentMethod, details.price);
+            var transaction = AutoMapperService<Transaction, TransactionDTO>.MapSingleWithAllDependency(data);
+
+            return transaction;
         }
     }
 }

@@ -25,7 +25,6 @@ namespace BLL.Services
                 cfg.CreateMap<Ticket, TicketDTO>();
                 cfg.CreateMap<Refund, RefundDTO>();
                 cfg.CreateMap<Transaction, TransactionDTO>();
-                cfg.CreateMap<Transaction, TransactionUserDTO>();
                 cfg.CreateMap<Route, RouteDTO>();
                 cfg.CreateMap<Station, StationDTO>();
                 cfg.CreateMap<User, UserDTO>();
@@ -33,7 +32,6 @@ namespace BLL.Services
                 cfg.CreateMap<TicketDTO, Ticket>();
                 cfg.CreateMap<RefundDTO, Refund>();
                 cfg.CreateMap<TransactionDTO, Transaction>();
-                cfg.CreateMap<TransactionUserDTO, Transaction>();
                 cfg.CreateMap<RouteDTO, Route>();
                 cfg.CreateMap<StationDTO, Station>();
                 cfg.CreateMap<UserDTO, User>();
@@ -60,7 +58,6 @@ namespace BLL.Services
                 cfg.CreateMap<Ticket, TicketDTO>();
                 cfg.CreateMap<Refund, RefundDTO>();
                 cfg.CreateMap<Transaction, TransactionDTO>();
-                cfg.CreateMap<Transaction, TransactionUserDTO>();
                 cfg.CreateMap<Route, RouteDTO>();
                 cfg.CreateMap<Station, StationDTO>();
                 cfg.CreateMap<User, UserDTO>();
@@ -68,7 +65,6 @@ namespace BLL.Services
                 cfg.CreateMap<TicketDTO, Ticket>();
                 cfg.CreateMap<RefundDTO, Refund>();
                 cfg.CreateMap<TransactionDTO, Transaction>();
-                cfg.CreateMap<TransactionUserDTO, Transaction>();
                 cfg.CreateMap<RouteDTO, Route>();
                 cfg.CreateMap<StationDTO, Station>();
                 cfg.CreateMap<UserDTO, User>();

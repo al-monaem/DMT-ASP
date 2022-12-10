@@ -69,10 +69,12 @@ namespace DAL.Repo
             return 0;
         }
 
-        public User Update(User obj)
+        public User Update(User obj, string token)
         {
+            var tk = GetUserByToken(token).User;
+
             var user = db.Users.FirstOrDefault(u => u.id.Equals(obj.id));
-            if(user.role == 0)
+            if(tk.role == 0)
             {
                 obj.id = user.id;
                 obj.password = user.password;
@@ -82,7 +84,7 @@ namespace DAL.Repo
                 obj.wallet = user.wallet;
                 obj.registrationDate = user.registrationDate;
             }
-            else if(user.role == 1)
+            else if(tk.role == 1)
             {
                 obj.password = user.password;
                 obj.role = user.role;
@@ -91,6 +93,11 @@ namespace DAL.Repo
             db.Entry(user).CurrentValues.SetValues(obj);
             db.SaveChanges();
             return user;
+        }
+
+        public Token GetUserByToken(string id)
+        {
+            return db.Tokens.FirstOrDefault(t=>t.accessToken == id);
         }
     }
 }

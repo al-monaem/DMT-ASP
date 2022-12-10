@@ -38,6 +38,7 @@ namespace DMT.Controllers
         {
             try
             {
+                var token = Request.Headers.Authorization;
                 if (!ModelState.IsValid)
                 {
                     dynamic error = new { };
@@ -55,7 +56,7 @@ namespace DMT.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, new { success = "", error = error, modelState = ModelState });
                 }
                 var message = "Update Successful";
-                return Request.CreateResponse(HttpStatusCode.OK, new { User = UserService.Update(user), success = message, error = "" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { User = UserService.Update(user, token.ToString()), success = message, error = "" });
             }
             catch
             {

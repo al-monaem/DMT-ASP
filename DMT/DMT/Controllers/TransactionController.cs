@@ -1,4 +1,5 @@
-﻿using BLL.Services;
+﻿using BLL.DTOs;
+using BLL.Services;
 using DMT.Auth;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,15 @@ namespace DMT.Controllers
         [Admin]
         public HttpResponseMessage GetTransactions(string id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, TransactionService.GetTransactions(id));
+            try
+            {
+                var transactions = TransactionService.GetTransactions(id);
+                return Request.CreateResponse(HttpStatusCode.OK, new { error = "", success = "Request Successful", transactions = transactions});
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { error = "Server under maintenance", success = "" });
+            }
         }
 
         [HttpGet]
@@ -54,6 +63,33 @@ namespace DMT.Controllers
 
         {
             return Request.CreateResponse(HttpStatusCode.OK, TransactionService.GetRoute(id));
+        }
+
+        [HttpPost]
+        [Route("api/checkout")]
+        [Logged]
+        public HttpResponseMessage Checkout(GatewayDTO details)
+        {
+            try
+            {
+                var transaction = TransactionService.Checkout(details);
+                if(transaction==null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new  {error="Could not complete transaction", success="" });
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, new { error = "", success = "Payment successful", transaction=transaction });
+            }
+            catch(Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { error = "Server under maintenance", success = "" });
+            }
+        }
+
+        [HttpPost]
+        [Route("api/success")]
+        public HttpResponseMessage success()
+        {
+            return Request.CreateResponse(HttpStatusCode.BadRequest, new { error = "Server under maintenance", success = "" });
         }
     }
 }

@@ -2,10 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import Bio from '../Profile/Bio'
 import Security from '../Profile/Security'
 import { motion } from "framer-motion"
-import { FaUserEdit } from "react-icons/fa"
 import Loader from "../common/Loader"
 import { useAuth } from '../../Auth/AuthContext'
-import Image from '../Profile/Image'
 
 const Profile = () => {
 

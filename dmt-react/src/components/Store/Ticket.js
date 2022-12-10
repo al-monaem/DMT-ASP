@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-/*<LoaderAnim />*/
-
 import { ImTicket } from "react-icons/im";
 import { motion, AnimatePresence } from "framer-motion";
 

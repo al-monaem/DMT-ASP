@@ -11,7 +11,9 @@ namespace DAL.Interfaces
     {
         List<Transaction> GetTransactions();
         List<Transaction> GetTransactions(string userId);
+        Transaction GetTransactionByTicketId(int id);
         Transaction Update();
         Transaction Add();
+        Transaction Checkout(string user_id, int route_id, string paymentMethod, int price);
     }
 }

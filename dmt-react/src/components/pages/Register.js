@@ -3,6 +3,7 @@ import RegForm from "../Registration/RegForm";
 import Logo from "../Login/Logo";
 import { useAuth } from "../../Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"
 
 const Register = () => {
 
@@ -36,11 +37,16 @@ const Register = () => {
             setValidation(null)
         }
         else {
-            Notification.requestPermission().then(perm => {
-                if (perm === "granted") {
-                    new Notification("Registration Successful, please login.")
-                }
-            })
+            toast.success(message.success, {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
             navigate("/login")
         }
         setLoading(false)

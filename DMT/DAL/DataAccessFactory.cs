@@ -12,6 +12,10 @@ namespace DAL
 {
     public class DataAccessFactory
     {
+        public static IAdmin AdminDataAccess()
+        {
+            return new AdminRepo();
+        }
         public static IRepo<User, string> UserDataAccess()
         {
             return new UserRepo();

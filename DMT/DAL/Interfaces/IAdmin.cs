@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.DTOs
+namespace DAL.Interfaces
 {
-    public class TransactionUserDTO:TransactionDTO
+    public interface IAdmin
     {
-        public virtual UserDTO User { get; set; }
+        bool Delete(string id);
     }
 }
