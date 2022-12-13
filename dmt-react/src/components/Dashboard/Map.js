@@ -7,8 +7,8 @@ import MarkerComponent from "../common/MarkerComponent"
 const GMap = ({ stations, destination, pickup }) => {
 
     const center = {
-        lat: stations[0].latitude,
-        lng: stations[0].longitude
+        lat: parseFloat(stations[0].latitude),
+        lng: parseFloat(stations[0].longitude)
     };
 
     const [map, setMap] = useState(null)
@@ -20,6 +20,10 @@ const GMap = ({ stations, destination, pickup }) => {
     const onUnmount = useCallback(function callback() {
         setMap(null)
     }, [])
+
+    useEffect(() => {
+        console.log(stations)
+    })
 
     return <>
         <GoogleMap
@@ -61,7 +65,7 @@ const GMap = ({ stations, destination, pickup }) => {
                         url: "https://cdn-icons-png.flaticon.com/512/8059/8059120.png",
                         scaledSize: new window.google.maps.Size(40, 40)
                     }}
-                    position={{ lat: data.latitude, lng: data.longitude }}
+                    position={{ lat: parseFloat(data.latitude), lng: parseFloat(data.longitude) }}
                     title={data.id}
                 />
             })}

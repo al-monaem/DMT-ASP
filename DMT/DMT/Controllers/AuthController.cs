@@ -89,5 +89,54 @@ namespace DMT.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, new { success = "" , error=e.Message});
             }
         }
+
+        [HttpPost]
+        [Route("api/passwordreset")]
+        public HttpResponseMessage ResetPassword(PasswordResetDTO data)
+        {
+            try
+            {
+                if(data == null)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, new { success = "", error = "Could not send OTP! Try again later" });
+
+                if (data.otp.Equals(""))
+                {
+                    dynamic result = AuthService.ResetPassword(data);
+                    if (result is ResetDTO)
+                    {
+                        string body = string.Empty;
+                        using (StreamReader reader = File.OpenText("G:\\Projects\\DMT-ASP\\DMT\\DMT\\Email Template\\ResetEmail.html"))
+                        {
+                            body = reader.ReadToEnd();
+                        }
+                        body = body.Replace("<%= otp %>", result.OTP.ToString());
+                        MailController.Send(data.email, "Reset Password", body);
+                        return Request.CreateResponse(HttpStatusCode.OK, new { success = "Check your email for OTP", error = "" });
+                    }
+
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, new { success = "", error = "User do not exist!" });
+                    }
+                }
+                else
+                {
+                    if (ModelState.IsValid)
+                    {
+                        var res = AuthService.ResetPassword(data);
+                        if (res)
+                            return Request.CreateResponse(HttpStatusCode.OK, new { success = "Password Reset Complete", error = "" });
+                        return Request.CreateResponse(HttpStatusCode.OK, new { success = "", error = "Could not reset password! Try again later" });
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, new { success = "", error = "Password Error", modelState = ModelState });
+                    }
+                }
+            }catch(Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { success = "", error = e.Message });
+            }
+        }
     }
 }

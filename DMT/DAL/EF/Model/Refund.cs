@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace DAL.EF.Model
         [ForeignKey("Transaction")]
         public int transaction_id { get; set; }
         [Required]
-        public DateTime date { get; set; }
+        public DateTime date { get; set; } = DateTime.Now;
         [Required]
         [ForeignKey("User")]
         public string user_id { get; set; }

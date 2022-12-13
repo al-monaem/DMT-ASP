@@ -8,14 +8,17 @@ const MyTicket = () => {
   const { verifyTicket } = useAuth();
   const [isverified, setIsverified] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [data, setData] = useState();
 
   const load = async (e) => {
     const data = await verifyTicket(id);
-    if (data.code === "200") {
+    setData(data)
+
+    if (data.success.length > 0) {
       setIsverified(true);
-    } else {
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -43,7 +46,7 @@ const MyTicket = () => {
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <h1 class="text-4xl font-bold">Ticket Verification Success!</h1>
+              <h1 class="text-4xl font-bold">{data.success}</h1>
             </>
           )}
           {!isverified && (
@@ -62,7 +65,7 @@ const MyTicket = () => {
                   d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
                 />
               </svg>
-              <h1 class="text-4xl font-bold">Ticket Verification Failed!</h1>
+              <h1 class="text-4xl font-bold">{data.error}</h1>
             </>
           )}
         </div>

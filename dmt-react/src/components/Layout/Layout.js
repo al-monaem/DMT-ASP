@@ -13,11 +13,13 @@ const Layout = () => {
         container: "flex w-screen divide-x max-h-screen h-screen "
     }
 
-    const { currentUser, setCredentials, } = useAuth()
+    const { currentUser, setCredentials, refreshUser } = useAuth()
     const [loading, setLoading] = useState(true)
 
     const load = async e => {
         await setCredentials()
+        if (currentUser)
+            await refreshUser(currentUser.id);
         InitializeToken()
         setLoading(false)
     }

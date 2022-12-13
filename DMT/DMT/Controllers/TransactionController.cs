@@ -91,5 +91,24 @@ namespace DMT.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.BadRequest, new { error = "Server under maintenance", success = "" });
         }
+
+        [Logged]
+        [HttpPost]
+        [Route("api/refund/{id}")]
+        public HttpResponseMessage Refund(int id)
+        {
+            try
+            {
+                if (TransactionService.Refund(id))
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new { error = "", success = "Refund successful" });
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, new { error = "Could not refund", success = "" });
+            }
+            catch(Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { error = "Server under maintenance", success = "" });
+            }
+        }
     }
 }

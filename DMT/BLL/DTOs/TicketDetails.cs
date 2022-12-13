@@ -9,7 +9,6 @@ namespace BLL.DTOs
     public class TicketDetails : TicketDTO
     {
         List<TransactionDTO> transactionList;
-        List<TicketDTO> ticketList;
 
         public TicketDetails()
         {

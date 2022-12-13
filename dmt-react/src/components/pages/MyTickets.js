@@ -22,7 +22,7 @@ const MyTickets = () => {
   const [indicatorPrevPosition, setIndicatorPrevPosition] = useState(0);
   const offset = 12;
 
-  const [activeSlide, setActiveSlide] = useState(1);
+  const [activeSlide, setActiveSlide] = useState(0);
   const swiper = useRef(null);
 
   const [tickets, setTickets] = useState(null);
@@ -71,9 +71,11 @@ const MyTickets = () => {
   };
   const onRefund = async (id) => {
     const data = await handleRefund(id);
-    console.log(data);
-    if (data.code === "200") {
-      toast.success(data.message, {
+
+    debugger
+
+    if (data.success.length > 0) {
+      toast.success(data.success, {
         position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -148,7 +150,7 @@ const MyTickets = () => {
             transition={{ duration: 0.7 }}
             className="absolute h-full w-full"
           >
-            <TransactionHistory />
+            <TransactionHistory tickets={tickets} />
           </motion.div>
         )}
       </div>

@@ -30,6 +30,7 @@ export const ActiveTickets = ({ tickets, swiper, activeSlide, setActiveSlide, on
   return tickets !== null && tickets !== undefined ? (
     <div className={style.container}>
       <Swiper
+        className="w-full"
         ref={swiper}
         centeredSlides={true}
         initialSlide={activeSlide}

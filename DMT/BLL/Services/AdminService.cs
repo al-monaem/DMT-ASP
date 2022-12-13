@@ -22,5 +22,23 @@ namespace BLL.Services
             var transactions = AutoMapperService<Transaction, TransactionDTO>.MapListWithAllDependency(data);
             return transactions;
         }
+
+        public static List<RevenueDTO> GetRevenues()
+        {
+            var data = DataAccessFactory.AdminDataAccess().GetRevenues();
+            var revenues = AutoMapperService<Revenue, RevenueDTO>.MapListWithAllDependency(data);
+
+            return revenues;
+        }
+
+        public static dynamic GetTransactionsCount()
+        {
+            return DataAccessFactory.AdminDataAccess().GetTransactionsCount();
+        }
+
+        public static bool VerifyTicket(string id)
+        {
+            return DataAccessFactory.AdminDataAccess().VerifyTicket(id);
+        }
     }
 }

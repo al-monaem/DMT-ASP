@@ -6,12 +6,14 @@ import { TiUserDelete } from "react-icons/ti";
 
 import ReactModal from "react-modal";
 
-const UserCard = ({ user, onSubmit, onDelete }) => {
+const UserCard = ({ user, onSubmit, onDelete, sendEmailtoUser }) => {
   const [editEmail, setEditEmail] = useState(false);
   const [editRole, setEditRole] = useState(false);
   const [email, setEmail] = useState(user.email);
   const [role, setRole] = useState(user.role);
   const [isOpen, setIsOpen] = useState(false);
+  const [isEmailOpen, setIsEmailOpen] = useState(false);
+  const [sendEmail, setSendEmail] = useState({ email: user.email })
 
   const emailRef = useRef();
   const roleRef = useRef();
@@ -54,6 +56,15 @@ const UserCard = ({ user, onSubmit, onDelete }) => {
     setEmail(user.email);
     setRole(user.role);
   }, []);
+
+  const onChange = (e) => {
+
+    setSendEmail({
+      ...sendEmail,
+      [e.target.name]: e.target.value
+    })
+
+  }
 
   return (
     <tr className={style.container}>
@@ -115,23 +126,23 @@ const UserCard = ({ user, onSubmit, onDelete }) => {
         onRequestClose={() => setIsOpen(false)}
         className="mx-auto my-64 h-[25%] w-[25%] rounded-2xl border-4 border-gray-200 bg-white p-3 shadow-lg"
       >
-        <div class="h-full w-full text-center">
-          <div class="flex h-full flex-col justify-between">
+        <div className="h-full w-full text-center">
+          <div className="flex h-full flex-col justify-between">
             <TiUserDelete
               className="w-12 h-12 m-auto mt-4 text-indigo-500"
               size={50}
             />
 
-            <p class="mt-4 text-xl font-bold text-gray-800">Remove User</p>
+            <p className="mt-4 text-xl font-bold text-gray-800">Remove User</p>
 
-            <p class="px-6 py-2 text-xs text-gray-600">
+            <p className="px-6 py-2 text-xs text-gray-600">
               Are you sure you want to delete this user ?
             </p>
-            <div class="mt-8 flex w-full items-center justify-between gap-4">
+            <div className="mt-8 flex w-full items-center justify-between gap-4">
               <button
                 onClick={() => onDelete(user.id)}
                 type="button"
-                class="w-[45%] rounded-lg bg-red-600 py-2 px-4 text-center text-base font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-indigo-200"
+                className="w-[45%] rounded-lg bg-red-600 py-2 px-4 text-center text-base font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-indigo-200"
               >
                 Delete
               </button>
@@ -140,7 +151,7 @@ const UserCard = ({ user, onSubmit, onDelete }) => {
                   () => setIsOpen(false)
                 }
                 type="button"
-                class="w-[45%] rounded-lg bg-gray-100 py-2 px-4 text-center text-base font-semibold text-red-500 shadow-md transition duration-200 ease-in hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-indigo-200"
+                className="w-[45%] rounded-lg bg-gray-100 py-2 px-4 text-center text-base font-semibold text-red-500 shadow-md transition duration-200 ease-in hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-indigo-200"
               >
                 Cancel
               </button>
@@ -148,6 +159,57 @@ const UserCard = ({ user, onSubmit, onDelete }) => {
           </div>
         </div>
       </ReactModal>
+
+      <ReactModal
+        isOpen={isEmailOpen}
+        onRequestClose={() => setIsEmailOpen(false)}
+        className="absolute flex items-center justify-center w-full h-full"
+      >
+        <div className="w-[30%] text-center rounded-2xl border-4 border-gray-200 bg-white p-3 shadow-lg">
+          <div className="flex h-full flex-col justify-between">
+            <TiUserDelete
+              className="w-12 h-12 m-auto mt-4 text-indigo-500"
+              size={50}
+            />
+
+            <p className="mt-4 text-xl font-bold text-gray-800">Email</p>
+
+            <p className="px-6 py-2 text-xs text-gray-600">
+              Send an email
+            </p>
+            <div className="text-sm space-y-3 flex flex-col w-full">
+              <div>
+                <input required className="border w-[70%] border-[#30D5C8] rounded-lg px-3 py-1 focus:outline-[#30D5C8]" placeholder="subject" name="subject" type="text" onChange={e => onChange(e)} />
+              </div>
+              <div className="w-full">
+                <textarea required className="w-[80%] border border-[#30D5C8] rounded-lg px-3 py-1 focus:outline-[#30D5C8]" name="body" onChange={e => onChange(e)} />
+              </div>
+            </div>
+            <div className="mt-8 flex w-full items-center justify-between gap-4">
+              <button
+                onClick={() => {
+                  sendEmailtoUser(sendEmail)
+                  setIsEmailOpen(false)
+                }}
+                type="button"
+                class="w-[45%] rounded-lg bg-blue-500 py-2 px-4 text-center text-base font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-indigo-200"
+              >
+                Send
+              </button>
+              <button
+                onClick={
+                  () => setIsEmailOpen(false)
+                }
+                type="button"
+                className="w-[45%] rounded-lg bg-gray-100 py-2 px-4 text-center text-base font-semibold text-red-500 shadow-md transition duration-200 ease-in hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-indigo-200"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </ReactModal>
+
       <td className="w-[150px]">
         <div className="flex space-x-3">
           <div
@@ -156,7 +218,7 @@ const UserCard = ({ user, onSubmit, onDelete }) => {
           >
             <MdDelete className="p-1 w-8 h-8" />
           </div>
-          <div className={`${style.action}  hover:bg-blue-500`}>
+          <div className={`${style.action}  hover:bg-blue-500`} onClick={(e) => setIsEmailOpen(true)}>
             <MdMarkEmailUnread className="p-1 w-8 h-8" />
           </div>
         </div>

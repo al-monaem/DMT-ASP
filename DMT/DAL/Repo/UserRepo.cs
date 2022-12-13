@@ -47,6 +47,10 @@ namespace DAL.Repo
         {
             return db.Users.Find(id);
         }
+        public User GetByEmail(string email)
+        {
+            return db.Users.FirstOrDefault(x=>x.email.Equals(email));
+        }
 
         public int Register(User user)
         {
@@ -74,23 +78,14 @@ namespace DAL.Repo
             var tk = GetUserByToken(token).User;
 
             var user = db.Users.FirstOrDefault(u => u.id.Equals(obj.id));
-            if(tk.role == 0)
+            user.password = obj.password;
+            user.nid = obj.nid;
+            user.dob = obj.dob;
+            if(tk.role == 1)
             {
-                obj.id = user.id;
-                obj.password = user.password;
-                obj.email = user.email;
-                obj.role = user.role;
-                obj.resettoken = user.resettoken;
-                obj.wallet = user.wallet;
-                obj.registrationDate = user.registrationDate;
+                user.role = obj.role;
+                user.email = obj.email;
             }
-            else if(tk.role == 1)
-            {
-                obj.password = user.password;
-                obj.role = user.role;
-                obj.resettoken = user.resettoken;
-            }
-            db.Entry(user).CurrentValues.SetValues(obj);
             db.SaveChanges();
             return user;
         }
@@ -98,6 +93,43 @@ namespace DAL.Repo
         public Token GetUserByToken(string id)
         {
             return db.Tokens.FirstOrDefault(t=>t.accessToken == id);
+        }
+
+        public dynamic ResetPassword(string email, string otp, string password)
+        {
+            var user = GetByEmail(email);
+            if (user == null)
+            {
+                return false;
+            }
+
+            if (otp.Equals(""))
+            {
+                Random RandNum = new Random();
+                int RandomNumber = RandNum.Next(10000, 99999);
+
+                var reset = new Reset()
+                {
+                    OTP = RandomNumber,
+                    user_id = user.id,
+                };
+                db.Resets.Add(reset);
+                db.SaveChanges();
+                return reset;
+            }
+            else
+            {
+                var data = db.Resets.FirstOrDefault(x => x.OTP.ToString().Equals(otp) && x.expiresAt < DateTime.Now);
+                if (data == null)
+                {
+                    return false;
+                }
+                user.password = HashPassword.Hash(password);
+                db.SaveChanges();
+
+                return true;
+            }
+
         }
     }
 }

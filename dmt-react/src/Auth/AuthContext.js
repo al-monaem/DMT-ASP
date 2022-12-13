@@ -111,6 +111,7 @@ export const AuthProvider = ({ children }) => {
       debugger
       if (data.transaction) {
         setPaymentdetails(data.transaction);
+        await refreshUser(currentUser.id)
         return data;
       }
       return data.error;
@@ -138,19 +139,14 @@ export const AuthProvider = ({ children }) => {
 
   const sendReset = async (email) => {
     try {
-      const response = await axios.post("api/passwordreset", email, {
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
+      const response = await axios.post("api/passwordreset", email);
       const data = await response.data;
       if (data) {
-        console.log();
-        return { message: data.message, status: response.status };
+        return data;
       }
-      return;
+      return { success: "", error: "Server under maintenance" };
     } catch (error) {
-      return error;
+      return { success: "", error: "Server under maintenance" };
     }
   };
   const passwordUpdate = async (password) => {
@@ -177,32 +173,29 @@ export const AuthProvider = ({ children }) => {
   const handleRefund = async (id) => {
     InitializeToken();
     try {
-      const response = await axios.get(`api/refund/${id}`);
+      const response = await axios.post(`api/refund/${id}`);
       const data = await response.data;
       if (data) {
-        console.log(data);
-        return { message: data.message, code: data.code };
+        await refreshUser(currentUser.id);
+        return data;
       }
       return;
     } catch (error) {
-      //console.log("route data error");
-      return false;
+      return { success: "", error: "Server under maintenance" };
     }
   };
 
   const verifyTicket = async (id) => {
     InitializeToken();
     try {
-      const response = await axios.get(`api/verifyticket/${id}`);
+      const response = await axios.post(`api/verifyticket/${id}`);
       const data = await response.data;
       if (data) {
-        console.log(data);
-        return { message: data.message, code: data.code };
+        return data;
       }
       return;
     } catch (error) {
-      //console.log("route data error");
-      return false;
+      return { success: "", error: "Server under maintenance" };
     }
   };
 
@@ -225,7 +218,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const setCredentials = () => {
+  const setCredentials = async () => {
     setCurrentUser(JSON.parse(localStorage.getItem("user")));
     setAccessToken(localStorage.getItem("accessToken"));
   };
@@ -262,6 +255,17 @@ export const AuthProvider = ({ children }) => {
       return { success: "", error: "Server under maintenance" };
     }
   };
+
+  const sendEmail = async (email) => {
+    debugger
+    try {
+      const response = await axios.post(`api/sendEmail`, email);
+      const data = await response.data;
+      return data;
+    } catch (error) {
+      return { success: "", error: "Server under maintenance" };
+    }
+  }
 
   const deleteUser = async (id) => {
     debugger
@@ -345,11 +349,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const refreshUser = async (id) => {
+    debugger
+    try {
+      const response = await axios.get(`api/getUser/${id}`);
+      const data = await response();
+      if (data.success.length > 0 && data.User) {
+        setCurrentUser(data.User);
+        localStorage.setItem("user", JSON.stringify(data.User));
+      }
+      return
+    } catch {
+      return
+    }
+  }
+
   const login = async (user) => {
     try {
-      const response = await axios.post("api/login", user, {
-        "content-type": "application/json",
-      });
+      const response = await axios.post("api/login", user);
       const data = await response.data;
       if (data.success && data.success.accessToken !== null) {
         setAccessToken(data.success.accessToken);
@@ -412,6 +429,8 @@ export const AuthProvider = ({ children }) => {
     handleRecharge,
     handleRefund,
     verifyTicket,
+    refreshUser,
+    sendEmail
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

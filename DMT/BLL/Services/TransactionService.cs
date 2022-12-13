@@ -58,5 +58,10 @@ namespace BLL.Services
 
             return transaction;
         }
+
+        public static bool Refund(int id)
+        {
+            return DataAccessFactory.TransactionDataAccess().Refund(id);
+        }
     }
 }

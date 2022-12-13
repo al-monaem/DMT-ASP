@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,8 +9,10 @@ namespace BLL.DTOs
 {
     public class PasswordResetDTO
     {
-        public string id { get; set; }
-        public string currentPassword { get; set; }
-        public string newPassword { get; set; }
+        [Required]
+        public string email { get; set; }
+        public string otp { get; set; }
+        [StringLength(int.MaxValue, MinimumLength =4)]
+        public string password { get; set; }
     }
 }

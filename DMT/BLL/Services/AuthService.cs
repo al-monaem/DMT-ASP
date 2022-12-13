@@ -72,5 +72,17 @@ namespace BLL.Services
         {
             return DataAccessFactory.AuthDataAccess().UpdatePassword(id, currentPassword, newPassword);
         }
+
+        public static dynamic ResetPassword(PasswordResetDTO details)
+        {
+            var res = DataAccessFactory.AuthDataAccess().ResetPassword(details.email, details.otp, details.password);
+            if(res is Reset)
+            {
+                var data = AutoMapperService<Reset, ResetDTO>.MapSingle(res);
+                return data;
+            }
+
+            return res;
+        }
     }
 }

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import Logo from "../Login/Logo";
 import { useAuth } from "../../Auth/AuthContext";
-import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const Reset = () => {
   const style = {
@@ -21,25 +20,26 @@ const Reset = () => {
     btn: "w-full p-2 rounded-lg mt-5 text-white font-semibold bg-blue-700",
   };
 
+  const navigate = useNavigate()
   const [data, setData] = useState({
     email: "",
     otp: "",
     password: "",
   });
-  const [emailresponse, setEmailresponse] = useState([]);
+  const [emailresponse, setEmailresponse] = useState({ success: "", error: "" });
 
   const { sendReset, passwordUpdate } = useAuth();
-
-  useEffect(() => {}, []);
+  const [isOpen, setIsOpen] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (e.currentTarget.id === "reset") {
       const response = await sendReset(data);
       setEmailresponse(response);
-      console.log(response);
-      if (response.code === "failed") {
-        toast.error("Email doesn't exist!", {
+      //console.log(response);
+
+      if (response.error.length > 0) {
+        toast.error(response.error, {
           position: "bottom-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -50,7 +50,8 @@ const Reset = () => {
           theme: "colored",
         });
       } else {
-        toast.success("Check your email!", {
+        setIsOpen(true);
+        toast.success(response.success, {
           position: "bottom-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -61,21 +62,36 @@ const Reset = () => {
           theme: "colored",
         });
       }
-    } else if (e.currentTarget.id === "update") {
-      const response = await passwordUpdate(data);
-      setEmailresponse(response);
-      toast.success("Password updated!", {
-        position: "bottom-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
     }
-    //console.log(response);
+    else if (e.currentTarget.id === "update") {
+      const response = await sendReset(data);
+      setEmailresponse(response);
+      if (response.success.length > 0) {
+        navigate('/login')
+        toast.success(response.success, {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+      else {
+        toast.error(response.error, {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    }
   };
 
   const handleChange = (e) => {
@@ -123,7 +139,7 @@ const Reset = () => {
                 />
               </span>
             </div>
-            {emailresponse.code === "success" && (
+            {isOpen && (
               <div className={style.field}>
                 <label className={style.label}>OTP</label>
                 <input
@@ -144,21 +160,21 @@ const Reset = () => {
               </div>
             )}
             <div className={style.field}>
-              {emailresponse.code !== "success" && (
+              {!isOpen && (
                 <button
                   className={style.btn}
                   id="reset"
-                  onClick={onSubmit}
+                  onClick={(e) => onSubmit(e)}
                   type="submit"
                 >
                   Reset
                 </button>
               )}
-              {emailresponse.code === "success" && (
+              {isOpen && (
                 <button
                   className={style.btn}
                   id="update"
-                  onClick={onSubmit}
+                  onClick={e => onSubmit(e)}
                   type="submit"
                 >
                   Update

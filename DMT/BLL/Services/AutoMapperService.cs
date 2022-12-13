@@ -28,6 +28,7 @@ namespace BLL.Services
                 cfg.CreateMap<Route, RouteDTO>();
                 cfg.CreateMap<Station, StationDTO>();
                 cfg.CreateMap<User, UserDTO>();
+                cfg.CreateMap<Revenue, RevenueDTO>();
 
                 cfg.CreateMap<TicketDTO, Ticket>();
                 cfg.CreateMap<RefundDTO, Refund>();
@@ -35,6 +36,7 @@ namespace BLL.Services
                 cfg.CreateMap<RouteDTO, Route>();
                 cfg.CreateMap<StationDTO, Station>();
                 cfg.CreateMap<UserDTO, User>();
+                cfg.CreateMap<RevenueDTO, Revenue>();
             });
             var mapper = new Mapper(config);
 

@@ -13,5 +13,6 @@ namespace DAL.Interfaces
         int Register(User user);
         int UpdatePassword(string id, string currentaPassword, string newPassword);
         Token GetUserByToken(string id);
+        dynamic ResetPassword(string email, string otp, string password);
     }
 }

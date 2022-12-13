@@ -21,9 +21,9 @@ const AdminDashboard = () => {
     const [loading, setLoading] = useState(true);
     const { getUsers, getTransactions, getRevenues } = useAuth();
 
-    const [userData, setUserData] = useState({});
-    const [transactionData, setTransactionData] = useState([]);
-    const [revenueData, setRevenueData] = useState([])
+    const [userData, setUserData] = useState(null);
+    const [transactionData, setTransactionData] = useState(null);
+    const [revenueData, setRevenueData] = useState(null)
 
     const loadData = async e => {
         debugger
@@ -36,7 +36,12 @@ const AdminDashboard = () => {
         const r = await getRevenues();
         setRevenue(r.revenues)
 
+        // filterData()
+        // filterRevenue()
+        // filterTransactions()
+
         setLoading(false)
+        filterData()
     }
 
     const getLabel = (year, month) => {
@@ -86,136 +91,138 @@ const AdminDashboard = () => {
     }
 
     const filterData = e => {
+        debugger
+        console.log(users)
 
-        let l = []
-        let count = []
+        if (users !== null) {
+            let l = []
+            let count = []
 
-        let x = []
+            let x = []
 
-        users.map((u) => {
-            let date = u.registrationDate
-            let year = date.split(" ")[0].split("-")[0]
-            let month = date.split(" ")[0].split("-")[1]
+            users.map((u) => {
+                let date = u.registrationDate
+                let year = date.split(" ")[0].split("-")[0]
+                let month = date.split(" ")[0].split("-")[1]
 
-            let label = getLabel(year, month)
-            //console.log(label)
-            if (l.includes(label)) {
-                let index = l.indexOf(label)
-                count[index] += 1
-            }
-            else {
-                l.push(label)
-                count.push(1)
-            }
-        })
+                let label = getLabel(year, month)
+                //console.log(label)
+                if (l.includes(label)) {
+                    let index = l.indexOf(label)
+                    count[index] += 1
+                }
+                else {
+                    l.push(label)
+                    count.push(1)
+                }
+            })
 
-        l.map((ll, index) => {
-            x.push({ date: ll, count: count[index] })
-        })
-        x = x.sort((a, b) => {
-            let x = a.date.split("-")[0] + "-" + "20" + a.date.split("-")[1]
-            let y = b.date.split("-")[0] + "-" + "20" + b.date.split("-")[1]
-            return new Date(x) - new Date(y);
-        })
-        l = []
-        let c = []
+            l.map((ll, index) => {
+                x.push({ date: ll, count: count[index] })
+            })
+            x = x.sort((a, b) => {
+                let x = a.date.split("-")[0] + "-" + "20" + a.date.split("-")[1]
+                let y = b.date.split("-")[0] + "-" + "20" + b.date.split("-")[1]
+                return new Date(x) - new Date(y);
+            })
+            l = []
+            let c = []
 
-        x.map((obj) => {
-            l.push(obj.date)
-            c.push(obj.count)
-        })
+            x.map((obj) => {
+                l.push(obj.date)
+                c.push(obj.count)
+            })
 
-        setUserData({
-            labels: l,
-            datasets: [{
-                label: "Users Registered",
-                data: c,
-            }]
-        })
+            setUserData({
+                labels: l,
+                datasets: [{
+                    label: "Users Registered",
+                    data: c,
+                }]
+            })
+        }
     }
 
     const filterRevenue = e => {
+        debugger
+        if (revenue !== null) {
+            let l = []
 
-        let l = []
+            let revenue_app_dataset = []
+            let revenue_manual_dataset = []
 
-        let revenue_app_dataset = []
-        let revenue_manual_dataset = []
+            revenue.map((r) => {
+                let date = r.date
+                let year = date.split("T")[0].split("-")[0]
+                let month = date.split("T")[0].split("-")[1]
+                let day = date.split("T")[0].split("-")[2]
+                let label = getLabel(year, month) + "-" + day
 
-        revenue.map((r) => {
-            let date = r.date
-            let year = date.split("-")[0]
-            let month = date.split("-")[1]
-            let day = date.split("-")[2]
-            let label = getLabel(year, month) + "-" + day
+                l.push(label)
+                revenue_app_dataset.push(r.revenue_app)
+                revenue_manual_dataset.push(r.revenue_manual)
+            })
 
-            l.push(label)
-            revenue_app_dataset.push(r.revenue_app)
-            revenue_manual_dataset.push(r.revenue_manual)
-        })
-
-        setRevenueData({
-            labels: l,
-            datasets: [
-                {
-                    label: "Revenue by app",
-                    data: revenue_app_dataset,
-                    backgroundColor: "#60B1EE"
-                },
-                {
-                    label: "Revenue manual",
-                    data: revenue_manual_dataset,
-                    backgroundColor: "#30D5C8",
-                }]
-        })
+            setRevenueData({
+                labels: l,
+                datasets: [
+                    {
+                        label: "Revenue by app",
+                        data: revenue_app_dataset,
+                        backgroundColor: "#60B1EE"
+                    },
+                    {
+                        label: "Revenue manual",
+                        data: revenue_manual_dataset,
+                        backgroundColor: "#30D5C8",
+                    }]
+            })
+        }
     }
 
     const filterTransactions = e => {
-        let l = []
-        let dataset = []
+        debugger
+        if (transactions.transactions !== null) {
+            let l = []
+            let dataset = []
 
-        transactions.count.map((r) => {
+            transactions.count.map((r) => {
 
-            let date = r.date
-            let year = date.split("-")[0]
-            let month = date.split("-")[1]
-            let day = date.split("-")[2]
-            let label = day + "-" + getLabel(year, month)
-            l.push(label)
+                let date = r.date
+                let year = date.split("-")[0]
+                let month = date.split("-")[1]
+                let day = date.split("-")[2]
+                let label = day + "-" + getLabel(year, month)
+                l.push(label)
 
-            dataset.push(r.amount)
-        })
+                dataset.push(r.amount)
+            })
 
-        setTransactionData({
-            labels: l,
-            datasets: [{
-                label: "Transaction amount",
-                data: dataset,
-            }]
-        })
-
+            setTransactionData({
+                labels: l,
+                datasets: [{
+                    label: "Transaction amount",
+                    data: dataset,
+                }]
+            })
+        }
     }
 
     useEffect(() => {
-        if (Array.isArray(revenue))
-            filterRevenue()
-    }, [revenue])
-
-    useEffect(() => {
-        if (transactions)
-            filterTransactions()
-    }, [transactions])
-
-    useEffect(() => {
-        if (users)
+        if (selected == 0 && users)
             filterData()
-    }, [users])
+        else if (selected == 1 && transactions)
+            filterTransactions()
+        else if (selected == 2 && revenue)
+            filterRevenue()
+    }, [selected])
 
     useEffect(() => {
         loadData()
     }, [])
 
     return (
-        loading && userData ? <Loader /> :
+        loading ? <Loader /> :
             <div className='flex flex-col bg-[#f6f8fa] w-full h-full'>
                 <div className='flex items-center justify-between mx-24 mt-10'>
                     <div>
@@ -236,9 +243,9 @@ const AdminDashboard = () => {
                             <button onClick={() => setSelected(2)} className={`${style.btn} ${selected == 2 ? "font-semibold border-b-[#30D5C8] border-b-2" : ""}`}>Revenue</button>
                         </div>
                         <div className='w-[50%] h-full pt-10'>
-                            {selected == 0 && <LineChart chartData={userData} />}
-                            {selected == 1 && <LineChart chartData={transactionData} />}
-                            {selected == 2 && <BarChartCompare chartData={revenueData} />}
+                            {selected == 0 && userData && <LineChart chartData={userData} />}
+                            {selected == 1 && transactionData && <LineChart chartData={transactionData} />}
+                            {selected == 2 && revenueData && <BarChartCompare chartData={revenueData} />}
                         </div>
                     </div>
                 </div>

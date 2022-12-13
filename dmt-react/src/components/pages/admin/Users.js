@@ -17,7 +17,7 @@ const Users = () => {
   //const [confirm, setConfirm] = useState(false);
   //const [isOpen, setIsOpen] = useState(false);
 
-  const { getUsers, adminUpdateUser, deleteUser } = useAuth();
+  const { getUsers, adminUpdateUser, deleteUser, sendEmail } = useAuth();
   const [filteredUsers, setFilteredUsers] = useState(null);
   let input = "";
   let role = -1;
@@ -132,6 +132,34 @@ const Users = () => {
     setLoading(false);
   }, [filteredUsers]);
 
+  const sendEmailtoUser = async (email) => {
+    const response = await sendEmail(email);
+    if (response.success.length > 0) {
+      toast.success(response.success, {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    else {
+      toast.error(response.error, {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  }
+
   const onDelete = async (id) => {
     debugger
     setLoading(true);
@@ -203,6 +231,7 @@ const Users = () => {
                       user={user}
                       onSubmit={onSubmit}
                       onDelete={onDelete}
+                      sendEmailtoUser={sendEmailtoUser}
                     />
                   );
                 })}

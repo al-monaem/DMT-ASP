@@ -51,32 +51,47 @@ const Checkout = ({ routes }) => {
       };
       const paymentresponse = await handlePayment(paymentdata);
       debugger
-      if (paymentresponse.transaction.method === "wallet") {
-        if (paymentresponse.success.length > 0) {
-          toast.success("Payment Successful!", {
-            position: "bottom-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-        else {
-          toast.error(paymentresponse.error, {
-            position: "bottom-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
+      if(paymentresponse.transaction){
+        if (paymentresponse.transaction.method === "wallet") {
+          if (paymentresponse.success.length > 0) {
+            toast.success("Payment Successful!", {
+              position: "bottom-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          }
+          else {
+            toast.error(paymentresponse.error, {
+              position: "bottom-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          }
         }
       }
+      else{
+        toast.error(paymentresponse.error, {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+      
 
       if (paymentresponse.success) {
         setIsOpen(false);

@@ -17,12 +17,12 @@ namespace DMT.Controllers
     public class UserController : ApiController
     {
         [HttpGet]
-        [Route("api/user")]
+        [Route("api/getUser/{id}")]
         [Logged]
         public HttpResponseMessage Get(string id)
         {
             var user = UserService.Get(id);
-            return Request.CreateResponse(HttpStatusCode.OK, user);
+            return Request.CreateResponse(HttpStatusCode.OK, new {error="", success="Request successful", User= user });
         }
         [HttpGet]
         [Route("api/admin/users")]
@@ -67,7 +67,7 @@ namespace DMT.Controllers
         [HttpPost]
         [Route("api/updatePassword")]
         [Logged]
-        public HttpResponseMessage UpdatePassword(PasswordResetDTO user)
+        public HttpResponseMessage UpdatePassword(PasswordChangeDTO user)
         {
             try
             {

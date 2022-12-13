@@ -1,4 +1,5 @@
 ﻿using DAL.EF;
+using DAL.EF.Helper;
 using DAL.EF.Model;
 using DAL.Interfaces;
 using System;
@@ -34,6 +35,33 @@ namespace DAL.Repo
         public Route GetRoute(int id)
         {
             return db.Routes.Find(id);
+        }
+
+        public bool Refund(int id)
+        {
+            var transaction = db.Transactions.FirstOrDefault(x => x.id == id);
+            if (transaction == null)
+                return false;
+
+            if(transaction.status.ToLower().Equals("paid") && transaction.Ticket.status.ToLower().Equals("active"))
+            {
+                var refund = new Refund()
+                {
+                    ticket_id = transaction.ticket_id,
+                    transaction_id = transaction.id,
+                    user_id = transaction.user_id,
+                };
+
+                db.Refunds.Add(refund);
+                transaction.status = "refunded";
+                transaction.Ticket.status = "refunded";
+                transaction.User.wallet += transaction.Ticket.Route.price;
+
+                db.SaveChanges();
+
+                return true;
+            }
+            return false;
         }
 
         public List<Ticket> GetTickets(string id)
@@ -87,13 +115,12 @@ namespace DAL.Repo
                 //db.Entry(user).State = EntityState.Modified;
                 user.wallet -= price;
                 //db.Entry(user).CurrentValues.SetValues(user);
-                db.SaveChanges();
+                //db.SaveChanges();
 
                 var ticket = new Ticket() { route_id = route_id };
                 db.Tickets.Add(ticket);
-                db.SaveChanges();
-
-                ticket = GetTicketByRouteId(route_id);
+                //db.SaveChanges();
+                //ticket = db.Tickets.LastOrDefault();
 
                 var transaction = new Transaction()
                 {
@@ -101,13 +128,12 @@ namespace DAL.Repo
                     status = "paid",
                     user_id = user_id,
                     ticket_id = ticket.id,
-                    transaction_id = "WLT_" + Guid.NewGuid().ToString()
+                    transaction_id = "WLT_" + GenerateString.RandomString(10)
                 };
 
                 db.Transactions.Add(transaction);
                 db.SaveChanges();
-
-                transaction = GetTransactionByTicketId(ticket.id);
+                //transaction = GetTransactionByTicketId(ticket.id);
 
                 return transaction;
             }
@@ -125,7 +151,7 @@ namespace DAL.Repo
                     status = "paid",
                     user_id = user_id,
                     ticket_id = ticket.id,
-                    transaction_id = "WLT_" + Guid.NewGuid().ToString()
+                    transaction_id = "GTW_" + GenerateString.RandomString(10)
                 };
 
                 db.Transactions.Add(transaction);
@@ -179,5 +205,6 @@ namespace DAL.Repo
         {
             return db.Tickets.FirstOrDefault(t => t.route_id == id);
         }
+
     }
 }

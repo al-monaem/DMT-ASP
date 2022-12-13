@@ -3,6 +3,7 @@ import MenuLink from './MenuLink'
 import Welcome from './Welcome'
 import { IoWalletOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../../Auth/AuthContext'
 
 const Topbar = () => {
 
@@ -14,6 +15,7 @@ const Topbar = () => {
 
     }
     const image = <img className={style.icon} src='/images/dummyProfile.jpg' />
+    const { currentUser } = useAuth()
 
     return (
         <div className={style.container}>
@@ -22,7 +24,7 @@ const Topbar = () => {
             </div>
             <div className={style.icon_container}>
                 <Link to={"profile"}><MenuLink icon={image} text="Go to Profile" k={1} /></Link>
-                <Link to={"topup"}><MenuLink icon={<IoWalletOutline className={style.icon} />} text="Top-up Wallet" k={2} /></Link>
+                <Link to={"topup"}><MenuLink icon={<IoWalletOutline className={style.icon} />} text={currentUser.wallet + " BDT"} k={2} /></Link>
             </div>
         </div>
     )

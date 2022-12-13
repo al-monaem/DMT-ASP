@@ -2,7 +2,7 @@ import React from 'react'
 import { BsArrowRightCircle } from "react-icons/bs"
 import { motion, AnimatePresence } from "framer-motion"
 
-const Transaction = ({ expanded, onClick, index }) => {
+const Transaction = ({ expanded, onClick, index, ticket }) => {
 
     const style = {
         container: `text-gray-700 w-full ${expanded ? "bg-[#DEE8FD] shadow-none" : "bg-[#30D5C8] shadow-lg"} px-4 py-2 rounded-lg font-semibold text-sm divide-y divide-gray-700`
@@ -12,8 +12,8 @@ const Transaction = ({ expanded, onClick, index }) => {
         <div className={style.container}>
             <div className='flex items-center h-[40px] hover:cursor-pointer' onClick={e => onClick(index)}>
                 <BsArrowRightCircle className='w-4 h-4 mr-2' />
-                <div className=''>Transaction ID:&emsp;<span>Trx-021923475923-Wlt</span></div>
-                <div className='ml-auto'>Date:&emsp;<span>10/10/2022</span></div>
+                <div className=''>Transaction ID:&emsp;<span>{ticket.transaction_id}</span></div>
+                <div className='ml-auto'>Date:&emsp;<span>{ticket.date.split("T")[0]}</span></div>
             </div>
             <AnimatePresence>
                 {expanded &&
@@ -29,10 +29,10 @@ const Transaction = ({ expanded, onClick, index }) => {
 
                                 <div>
                                     <div>
-                                        Pickup Station - Mirpur-10
+                                        Pickup Station - {ticket.Ticket.Route.station_1}
                                     </div>
                                     <div>
-                                        Destination Station - Mirpur-10
+                                        Destination Station - {ticket.Ticket.Route.station_2}
                                     </div>
                                 </div>
                             </div>
@@ -40,16 +40,19 @@ const Transaction = ({ expanded, onClick, index }) => {
                                 <div className='text-base text-gray-700 font-bold'>Ticket Details-</div>
                                 <div>
                                     <div>
-                                        Ticket ID - tkt-001294x95723
+                                        Ticket ID - {ticket.Ticket.id}
                                     </div>
                                     <div>
-                                        Price - 20 BDT
+                                        Price - {ticket.Ticket.Route.price}
+                                    </div>
+                                    <div>
+                                        Status - {ticket.Ticket.status.toUpperCase()}
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className='flex'>
-                            <img className=' ml-auto p-2 max-w-[100%]' src='/images/QR.png' />
+                            <img className=' ml-auto p-2 max-w-[100%]' src={`http://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://localhost:3000/ticketverify/${ticket.transaction_id}`} />
                         </div>
                     </motion.div>
                 }

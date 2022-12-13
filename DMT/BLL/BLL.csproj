@@ -48,10 +48,14 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Custom Validator\UniqueEmail.cs" />
     <Compile Include="Custom Validator\UniqueUser.cs" />
+    <Compile Include="DTOs\EmailDTO.cs" />
     <Compile Include="DTOs\GatewayDTO.cs" />
     <Compile Include="DTOs\LoginDTO.cs" />
+    <Compile Include="DTOs\PasswordChangeDTO.cs" />
     <Compile Include="DTOs\PasswordResetDTO.cs" />
     <Compile Include="DTOs\RefundDTO.cs" />
+    <Compile Include="DTOs\ResetDTO.cs" />
+    <Compile Include="DTOs\RevenueDTO.cs" />
     <Compile Include="DTOs\RouteDTO.cs" />
     <Compile Include="DTOs\StationDTO.cs" />
     <Compile Include="DTOs\TicketDTO.cs" />

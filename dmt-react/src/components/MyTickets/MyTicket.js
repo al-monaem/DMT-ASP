@@ -10,7 +10,7 @@ const MyTicket = ({ id, ticket, onRefund }) => {
         <div className="p-5">
           <img
             className="h-52"
-            src={`http://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=127.0.0.1:3000/ticketverify/${ticket.transaction_id}`}
+            src={`http://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://localhost:3000/ticketverify/${ticket.transaction_id}`}
           />
         </div>
         <div className="space-x-3 pb-5 flex text-xs font-semibold">
@@ -26,7 +26,7 @@ const MyTicket = ({ id, ticket, onRefund }) => {
       </div>
       <button
         className="bg-[#30D5C8] rounded-lg py-2 px-4 my-4 font-semibold text-white text-sm"
-        onClick={() => onRefund(ticket.Ticket.id)}
+        onClick={() => onRefund(ticket.id)}
       >
         Refund
       </button>

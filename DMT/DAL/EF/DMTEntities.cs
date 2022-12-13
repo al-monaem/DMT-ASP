@@ -18,5 +18,6 @@ namespace DAL.EF
         public DbSet<Route> Routes { get; set; }
         public DbSet<Revenue> Revenues { get; set; }
         public DbSet<Refund> Refunds { get; set; }
+        public DbSet<Reset> Resets { get; set; }
     }
 }

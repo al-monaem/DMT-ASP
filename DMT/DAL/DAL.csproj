@@ -60,8 +60,10 @@
     <Compile Include="Class1.cs" />
     <Compile Include="DataAccessFactory.cs" />
     <Compile Include="EF\DMTEntities.cs" />
+    <Compile Include="EF\Helper\GenerateString.cs" />
     <Compile Include="EF\Helper\HashPassword.cs" />
     <Compile Include="EF\Model\Refund.cs" />
+    <Compile Include="EF\Model\Reset.cs" />
     <Compile Include="EF\Model\Revenue.cs" />
     <Compile Include="EF\Model\Route.cs" />
     <Compile Include="EF\Model\Station.cs" />
@@ -84,6 +86,10 @@
     <Compile Include="Migrations\202212061154343_MAX_LENGTH_USERS.designer.cs">
       <DependentUpon>202212061154343_MAX_LENGTH_USERS.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202212131258464_ADD_RESET_TABLE.cs" />
+    <Compile Include="Migrations\202212131258464_ADD_RESET_TABLE.designer.cs">
+      <DependentUpon>202212131258464_ADD_RESET_TABLE.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repo\AdminRepo.cs" />
@@ -104,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202212061154343_MAX_LENGTH_USERS.resx">
       <DependentUpon>202212061154343_MAX_LENGTH_USERS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212131258464_ADD_RESET_TABLE.resx">
+      <DependentUpon>202212131258464_ADD_RESET_TABLE.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

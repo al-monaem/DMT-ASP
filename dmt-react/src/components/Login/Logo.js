@@ -3,7 +3,7 @@ import React from 'react'
 const Logo = () => {
     return (
         <>
-            <div className="relative mt-10 ml-10">
+            <div className="relative mt-10 ml-10 scale-[88%]">
                 <img className="absolute ml-20 mt-20" src="/images/assets/png/navyDot.png" alt="" />
                 <img className="scale-125 absolute ml-14 mt-28" src="/images/assets/png/purpleDot.png" alt="" />
 

@@ -49,7 +49,8 @@
                     password = HashPassword.Hash("1234"),
                     dob = DateTime.Now.AddDays(-20),
                     phone = "01875609450",
-                    role = 1
+                    role = 1,
+                    wallet=100
                 });
                 users.Add(new User()
                 {
@@ -58,7 +59,8 @@
                     email = "abyss@gmail.com",
                     password = HashPassword.Hash("1234"),
                     dob = DateTime.Now.AddDays(-20),
-                    phone = "01875609450"
+                    phone = "01875609450",
+                    wallet = 100
                 });
                 users.Add(new User()
                 {
@@ -67,7 +69,8 @@
                     email = "alvin@gmail.com",
                     password = HashPassword.Hash("1234"),
                     dob = DateTime.Now.AddDays(-20),
-                    phone = "01875609450"
+                    phone = "01875609450",
+                    wallet = 100
                 });
                 users.Add(new User()
                 {
@@ -76,10 +79,22 @@
                     email = "sayeth@gmail.com",
                     password = HashPassword.Hash("1234"),
                     dob = DateTime.Now.AddDays(-20),
-                    phone = "01875609450"
+                    phone = "01875609450",
+                    wallet = 100
+                });
+                users.Add(new User()
+                {
+                    id = "Shanto",
+                    name = "Al-monaem khan",
+                    email = "20-42650-1@student.aiub.edu",
+                    password = HashPassword.Hash("1234"),
+                    dob = DateTime.Now.AddDays(-20),
+                    phone = "01875609450",
+                    wallet = 100,
+                    role =1
                 });
 
-                for (int i = 0; i < 500; i++)
+                for (int i = 0; i < 200; i++)
                 {
                     var faker = new Faker<User>()
                         .RuleFor(x => x.id, x => x.Person.UserName)
@@ -213,44 +228,133 @@
                     method = "wallet",
                     ticket_id = 1,
                     transaction_id = "trx-1f09348ahbjkbavu-wlt",
-                    user_id = "Bishop"
+                    user_id = "Bishop",
+                    date = GetRandomDate(new DateTime(2021, 1, 1), new DateTime(2022, 1, 1))
                 });
                 transactions.Add(new Transaction()
                 {
                     method = "wallet",
                     ticket_id = 3,
                     transaction_id = "trx-1f09348ahbjkbavu-wlt",
-                    user_id = "Bishop"
+                    user_id = "Bishop",
+                    date = GetRandomDate(new DateTime(2021, 1, 1), new DateTime(2022, 1, 1))
                 });
                 transactions.Add(new Transaction()
                 {
                     method = "ssl",
                     ticket_id = 4,
+                    user_id = "Bishop",
                     transaction_id = "trx-1f09348ahbjkbavu-ssl",
-                    user_id = "Bishop"
+                    date = GetRandomDate(new DateTime(2021, 1, 1), new DateTime(2022, 1, 1))
                 });
                 transactions.Add(new Transaction()
                 {
                     method = "ssl",
                     ticket_id = 3,
                     transaction_id = "trx-1f09348ahbjkbavu-ssl",
-                    user_id = "Bishop"
+                    user_id = "Bishop",
+                    date = GetRandomDate(new DateTime(2021, 1, 1), new DateTime(2022, 1, 1))
                 });
                 transactions.Add(new Transaction()
                 {
                     method = "wallet",
                     ticket_id = 5,
                     transaction_id = "trx-1f09348ahbjkbavu-wlt",
-                    user_id = "Abyss"
+                    user_id = "Abyss",
+                    date = GetRandomDate(new DateTime(2021, 1, 1), new DateTime(2022, 1, 1))
                 });
                 transactions.Add(new Transaction()
                 {
                     method = "wallet",
                     ticket_id = 2,
                     transaction_id = "trx-1f09348ahbjkbavu-wlt",
-                    user_id = "Abyss"
+                    user_id = "Abyss",
+                    date = GetRandomDate(new DateTime(2021, 1, 1), new DateTime(2022, 1, 1))
                 });
                 context.Transactions.AddOrUpdate(transactions.ToArray());
+
+                List<Revenue> revenues = new List<Revenue>();
+                revenues.Add(new Revenue()
+                {
+                    date = DateTime.Today.AddDays(-1),
+                    revenue_app = 2000,
+                    revenue_manual = 1500,
+                    tickets_sold_app = 100,
+                    tickets_sold_manual = 100
+                });
+                revenues.Add(new Revenue()
+                {
+                    date = DateTime.Today.AddDays(-2),
+                    revenue_app = 1100,
+                    revenue_manual = 1400,
+                    tickets_sold_app = 100,
+                    tickets_sold_manual = 100
+                });
+
+                revenues.Add(new Revenue()
+                {
+                    date = DateTime.Today.AddDays(-3),
+                    revenue_app = 2300,
+                    revenue_manual = 2000,
+                    tickets_sold_app = 100,
+                    tickets_sold_manual = 100
+                });
+
+                revenues.Add(new Revenue()
+                {
+                    date = DateTime.Today.AddDays(-4),
+                    revenue_app = 1200,
+                    revenue_manual = 1500,
+                    tickets_sold_app = 100,
+                    tickets_sold_manual = 100
+                });
+
+                revenues.Add(new Revenue()
+                {
+                    date = DateTime.Today.AddDays(-5),
+                    revenue_app = 1700,
+                    revenue_manual = 1000,
+                    tickets_sold_app = 100,
+                    tickets_sold_manual = 100
+                });
+
+                revenues.Add(new Revenue()
+                {
+                    date = DateTime.Today.AddDays(-6),
+                    revenue_app = 1600,
+                    revenue_manual = 800,
+                    tickets_sold_app = 100,
+                    tickets_sold_manual = 100
+                });
+
+                revenues.Add(new Revenue()
+                {
+                    date = DateTime.Today.AddDays(-7),
+                    revenue_app = 1100,
+                    revenue_manual = 1900,
+                    tickets_sold_app = 100,
+                    tickets_sold_manual = 100
+                });
+
+                revenues.Add(new Revenue()
+                {
+                    date = DateTime.Today.AddDays(-8),
+                    revenue_app = 1500,
+                    revenue_manual = 1300,
+                    tickets_sold_app = 100,
+                    tickets_sold_manual = 100
+                });
+
+                revenues.Add(new Revenue()
+                {
+                    date = DateTime.Today.AddDays(-9),
+                    revenue_app = 1600,
+                    revenue_manual = 1500,
+                    tickets_sold_app = 100,
+                    tickets_sold_manual = 100
+                });
+
+                context.Revenues.AddOrUpdate(revenues.ToArray());
             }
             catch (Exception e)
             {
